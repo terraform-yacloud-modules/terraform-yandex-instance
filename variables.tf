@@ -188,7 +188,7 @@ variable "hostname" {
 }
 
 variable "service_account_id" {
-  description = "ID of the service account authorized for this instance"
+  description = "ID of the service account authorized for instance"
   type        = string
   default     = null
 }

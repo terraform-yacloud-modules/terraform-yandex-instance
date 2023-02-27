@@ -1,9 +1,9 @@
 locals {
   use_snapshot = var.image_snapshot_id != null ? true : false
-  image_id = (
-    coalesce(
-      var.image_id,
-      data.yandex_compute_image.this.id
+  image_id     = (
+  coalesce(
+    var.image_id,
+    data.yandex_compute_image.this.id
   ))
   ssh_keys           = var.generate_ssh_key ? "${var.ssh_user}:${tls_private_key.this[0].public_key_openssh}" : (var.ssh_pubkey != null ? "${var.ssh_user}:${file(var.ssh_pubkey)}" : null)
   instance_public_ip = var.create_pip ? yandex_vpc_address.main[0].external_ipv4_address[0].address : var.public_ip_address
@@ -24,6 +24,9 @@ resource "yandex_compute_instance" "this" {
   zone     = var.zone
   hostname = var.hostname
 
+  service_account_id        = var.service_account_id
+  allow_stopping_for_update = var.allow_stopping_for_update
+
   metadata = {
     serial-port-enable = var.serial_port_enable ? 1 : null
     ssh-keys           = local.ssh_keys
@@ -32,24 +35,6 @@ resource "yandex_compute_instance" "this" {
   metadata_options {}
 
   platform_id = var.platform_id
-
-  dynamic "secondary_disk" {
-    for_each = (
-      {
-        for disk_name, disk_info in yandex_compute_disk.this :
-        disk_name => merge(disk_info, var.secondary_disks[disk_name])
-      }
-    )
-
-    iterator = disk
-    content {
-      auto_delete = disk.value.auto_delete
-      disk_id     = disk.value.id
-      mode        = disk.value.mode
-      device_name = disk.value.device_name
-    }
-  }
-
   scheduling_policy {
     preemptible = var.preemptible
   }
@@ -68,10 +53,6 @@ resource "yandex_compute_instance" "this" {
   #      }
   #    }
   #  }
-
-  service_account_id        = var.service_account_id
-  allow_stopping_for_update = var.allow_stopping_for_update
-  network_acceleration_type = var.network_acceleration_type
 
   resources {
     cores         = var.cores
@@ -96,15 +77,32 @@ resource "yandex_compute_instance" "this" {
     }
   }
 
-  network_interface {
-    subnet_id      = var.subnet_id
-    ipv4           = var.enable_ipv4
-    ip_address     = var.private_ip_address
-    ipv6           = var.enable_ipv6
-    ipv6_address   = var.private_ipv6_address
-    nat            = var.enable_nat
-    nat_ip_address = local.instance_public_ip
+  dynamic "secondary_disk" {
+    for_each = (
+    {
+    for disk_name, disk_info in yandex_compute_disk.this :
+    disk_name => merge(disk_info, var.secondary_disks[disk_name])
+    }
+    )
 
+    iterator = disk
+    content {
+      disk_id     = disk.value.id
+      auto_delete = disk.value.auto_delete
+      device_name = disk.value.device_name
+      mode        = disk.value.mode
+    }
+  }
+
+  network_acceleration_type = var.network_acceleration_type
+  network_interface {
+    subnet_id          = var.subnet_id
+    ipv4               = var.enable_ipv4
+    ip_address         = var.private_ip_address
+    ipv6               = var.enable_ipv6
+    ipv6_address       = var.private_ipv6_address
+    nat                = var.enable_nat
+    nat_ip_address     = local.instance_public_ip
     security_group_ids = var.security_group_ids
     # dns_record {}
     # ipv6_dns_record{}
