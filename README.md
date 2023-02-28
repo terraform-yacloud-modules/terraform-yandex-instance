@@ -36,6 +36,7 @@ No modules.
 | [yandex_compute_disk.this](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/compute_disk) | resource |
 | [yandex_compute_instance.this](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/compute_instance) | resource |
 | [yandex_vpc_address.main](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/vpc_address) | resource |
+| [yandex_client_config.client](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/data-sources/client_config) | data source |
 | [yandex_compute_image.this](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/data-sources/compute_image) | data source |
 
 ## Inputs
@@ -53,7 +54,7 @@ No modules.
 | <a name="input_enable_ipv6"></a> [enable\_ipv6](#input\_enable\_ipv6) | Allocate an IPv6 address for the interface | `string` | `false` | no |
 | <a name="input_enable_nat"></a> [enable\_nat](#input\_enable\_nat) | Enable public IPv4 address | `bool` | `null` | no |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | Folder ID | `string` | `null` | no |
-| <a name="input_generate_ssh_key"></a> [generate\_ssh\_key](#input\_generate\_ssh\_key) | n/a | `string` | `true` | no |
+| <a name="input_generate_ssh_key"></a> [generate\_ssh\_key](#input\_generate\_ssh\_key) | If true, SSH key will be generated for instance group | `string` | `true` | no |
 | <a name="input_hostname"></a> [hostname](#input\_hostname) | Hostname of the instance. More info: https://cloud.yandex.ru/docs/compute/concepts/network#hostname | `string` | `null` | no |
 | <a name="input_image_family"></a> [image\_family](#input\_image\_family) | Default image family name (lowest priority) | `string` | `"ubuntu-2004-lts"` | no |
 | <a name="input_image_id"></a> [image\_id](#input\_image\_id) | Image ID (medium priority) | `string` | `null` | no |
@@ -72,7 +73,7 @@ No modules.
 | <a name="input_secondary_disks"></a> [secondary\_disks](#input\_secondary\_disks) | Additional disks with params | <pre>map(object({<br>    enabled     = optional(bool, true)<br>    auto_delete = optional(bool, false)<br>    mode        = optional(string)<br>    labels      = optional(map(string), {})<br>    type        = optional(string, "network-hdd")<br>    size        = optional(number, 10)<br>    block_size  = optional(number, 4096)<br>    device_name = optional(string)<br>  }))</pre> | `{}` | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | Security group IDs linked to the instance | `list(string)` | `null` | no |
 | <a name="input_serial_port_enable"></a> [serial\_port\_enable](#input\_serial\_port\_enable) | Enable serial port on the instance | `bool` | `false` | no |
-| <a name="input_service_account_id"></a> [service\_account\_id](#input\_service\_account\_id) | ID of the service account authorized for this instance | `string` | `null` | no |
+| <a name="input_service_account_id"></a> [service\_account\_id](#input\_service\_account\_id) | ID of the service account authorized for instance | `string` | `null` | no |
 | <a name="input_ssh_pubkey"></a> [ssh\_pubkey](#input\_ssh\_pubkey) | Public RSA key path to inject | `string` | `null` | no |
 | <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | Initial SSH username for instance | `string` | `"ubuntu"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | VPC Subnet ID | `string` | n/a | yes |

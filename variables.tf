@@ -200,8 +200,9 @@ variable "allow_stopping_for_update" {
 }
 
 variable "generate_ssh_key" {
-  type    = string
-  default = true
+  description = "If true, SSH key will be generated for instance group"
+  type        = string
+  default     = true
 }
 
 variable "ssh_user" {
