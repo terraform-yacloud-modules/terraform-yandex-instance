@@ -28,10 +28,12 @@ output "compute_disks" {
 
 output "ssh_key_pub" {
   description = "Public SSH key"
+  sensitive   = true
   value       = var.generate_ssh_key ? tls_private_key.this[0].public_key_openssh : null
 }
 
 output "ssh_key_prv" {
   description = "Private SSH key"
+  sensitive   = true
   value       = var.generate_ssh_key ? tls_private_key.this[0].private_key_pem : null
 }
