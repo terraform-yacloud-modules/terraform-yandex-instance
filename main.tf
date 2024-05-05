@@ -18,7 +18,7 @@ resource "tls_private_key" "this" {
 resource "yandex_compute_instance" "this" {
   name        = var.name
   description = var.description
-  folder_id   = var.folder_id
+  folder_id   = var.folder_id == null ? data.yandex_client_config.client.folder_id : var.folder_id
   labels      = var.labels
 
   zone     = var.zone
