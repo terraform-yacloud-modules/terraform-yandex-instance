@@ -112,4 +112,17 @@ resource "yandex_compute_instance" "this" {
   lifecycle {
     ignore_changes = [boot_disk]
   }
+
+  provisioner "remote-exec" {
+    connection {
+      type        = "ssh"
+      user        = var.ssh_user
+      host        = self.network_interface.0.ip_address
+      private_key = local.ssh_keys
+      port        = 22
+    }
+    inline = [
+      "echo check connection"
+    ]
+  }
 }
