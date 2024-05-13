@@ -113,16 +113,22 @@ resource "yandex_compute_instance" "this" {
     ignore_changes = [boot_disk]
   }
 
-  provisioner "remote-exec" {
-    connection {
-      type        = "ssh"
-      user        = var.ssh_user
-      host        = self.network_interface.0.ip_address
-      private_key = local.ssh_keys
-      port        = 22
+  dynamic "provisioner" {
+    for_each = var.enable_nat == 1 ? [1] : []
+    content {
+      provisioner "remote-exec" {
+        connection {
+          type        = "ssh"
+          user        = var.ssh_user
+          host        = yandex_compute_disk.this.network_interface.0.nat_ip_address
+          private_key = local.ssh_keys
+          port        = 22
+        }
+        inline = [
+          "echo check connection"
+        ]
+      }
     }
-    inline = [
-      "echo check connection"
-    ]
   }
+
 }
