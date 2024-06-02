@@ -30,7 +30,7 @@ module "yandex_compute_instance" {
   allow_stopping_for_update = true
   generate_ssh_key          = false
   ssh_user                  = "ubuntu"
-  ssh_pubkey                = "~/.ssh/id_magnit.pub"
+  ssh_pubkey                = "~/.ssh/id_rsa.pub"
 
   boot_disk = {
     auto_delete = true
