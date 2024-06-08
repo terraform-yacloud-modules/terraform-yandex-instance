@@ -101,6 +101,11 @@ variable "serial_port_enable" {
   default     = false
 }
 
+variable "docker-compose" {
+  description = "The key in the VM metadata that uses the docker-compose specification"
+  default = ""
+}
+
 #
 # vm size
 #
