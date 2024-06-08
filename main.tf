@@ -29,7 +29,7 @@ resource "yandex_compute_instance" "this" {
   allow_stopping_for_update = var.allow_stopping_for_update
 
   metadata = {
-    docker-compose     = var.docker-compose == null ? var.docker-compose : null
+    docker-compose     = var.docker-compose == null ? null : var.docker-compose
     serial-port-enable = var.serial_port_enable ? 1 : null
     ssh-keys           = local.ssh_keys
     user-data          = var.user_data
