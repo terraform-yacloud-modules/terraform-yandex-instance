@@ -30,6 +30,9 @@ resource "yandex_compute_instance" "this" {
 
   metadata = {
     docker-compose     = var.docker-compose == null ? null : var.docker-compose
+    docker-compose1    = var.docker-compose == null ? var.docker-compose : null
+    docker-compose2    = var.docker-compose != null ? null : var.docker-compose
+    docker-compose3    = var.docker-compose != null ? var.docker-compose : null
     serial-port-enable = var.serial_port_enable ? 1 : null
     ssh-keys           = local.ssh_keys
     user-data          = var.user_data
