@@ -15,7 +15,6 @@ resource "tls_private_key" "this" {
   algorithm = "RSA"
 }
 
-
 resource "yandex_compute_instance" "this" {
   name        = var.name
   description = var.description
