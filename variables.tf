@@ -106,6 +106,21 @@ variable "docker-compose" {
   default = ""
 }
 
+variable "docker-compose1" {
+  description = "The key in the VM metadata that uses the docker-compose specification"
+  default = ""
+}
+
+variable "docker-compose2" {
+  description = "The key in the VM metadata that uses the docker-compose specification"
+  default = ""
+}
+
+variable "docker-compose3" {
+  description = "The key in the VM metadata that uses the docker-compose specification"
+  default = ""
+}
+
 #
 # vm size
 #
