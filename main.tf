@@ -7,6 +7,10 @@ locals {
   ))
   ssh_keys           = var.generate_ssh_key ? "${var.ssh_user}:${tls_private_key.this[0].public_key_openssh}" : (var.ssh_pubkey != null ? "${var.ssh_user}:${file(var.ssh_pubkey)}" : null)
   instance_public_ip = var.create_pip ? yandex_vpc_address.main[0].external_ipv4_address[0].address : var.public_ip_address
+
+  additional_metadata = {
+    for k, v in var.dynamic_metadata : k => v
+  }
 }
 
 resource "tls_private_key" "this" {
@@ -27,12 +31,15 @@ resource "yandex_compute_instance" "this" {
   service_account_id        = var.service_account_id
   allow_stopping_for_update = var.allow_stopping_for_update
 
-  metadata = {
-    docker-compose     = var.docker_compose == null ? null : file(var.docker_compose)
-    serial-port-enable = var.serial_port_enable ? 1 : null
-    ssh-keys           = local.ssh_keys
-    user-data          = var.user_data
-  }
+  metadata = merge(
+    {
+      docker-compose     = var.docker_compose == null ? null : file(var.docker_compose)
+      serial-port-enable = var.serial_port_enable ? 1 : null
+      ssh-keys           = local.ssh_keys
+      user-data          = var.user_data
+    },
+    local.additional_metadata
+  )
   metadata_options {}
 
   platform_id = var.platform_id

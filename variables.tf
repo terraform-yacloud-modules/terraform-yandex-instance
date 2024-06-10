@@ -266,3 +266,9 @@ variable "secondary_disks" {
   }))
   default = {}
 }
+
+variable "dynamic_metadata" {
+  description = "Dynamic metadata for the resource"
+  type        = map(string)
+  default     = {}
+}
