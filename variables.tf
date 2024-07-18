@@ -103,7 +103,7 @@ variable "serial_port_enable" {
 
 variable "docker_compose" {
   description = "The key in the VM metadata that uses the docker-compose specification"
-  default = null
+  default     = null
 }
 
 #

@@ -38,6 +38,5 @@ module "wrapper" {
   user_data                   = try(each.value.user_data, var.defaults.user_data, null)
   boot_disk                   = try(each.value.boot_disk, var.defaults.boot_disk, {})
   boot_disk_initialize_params = try(each.value.boot_disk_initialize_params, var.defaults.boot_disk_initialize_params, {})
-  secondary_disks             = try(each.value.secondary_disks, var.defaults.secondary_disks, null)
-
+  secondary_disks             = try(each.value.secondary_disks, var.defaults.secondary_disks, {})
 }
