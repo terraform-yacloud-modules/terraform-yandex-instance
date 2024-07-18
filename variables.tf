@@ -103,7 +103,7 @@ variable "serial_port_enable" {
 
 variable "docker_compose" {
   description = "The key in the VM metadata that uses the docker-compose specification"
-  default = null
+  default     = null
 }
 
 #
@@ -220,6 +220,12 @@ variable "ssh_pubkey" {
   description = "Public RSA key path to inject"
   type        = string
   default     = null
+}
+
+variable "enable_oslogin" {
+  description = "Enable OS Login"
+  type        = string
+  default     = false
 }
 
 variable "user_data" {
