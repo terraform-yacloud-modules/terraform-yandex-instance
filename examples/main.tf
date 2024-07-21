@@ -3,8 +3,9 @@ module "yandex_compute_instance" {
 
   folder_id = "xxx"
 
-  name        = "my-instance"
-  description = "Test instance"
+  name         = "my-instance"
+  description  = "Test instance"
+  image_family = "ubuntu-2204-lts"
   labels = {
     environment = "dev"
     project     = "example"
@@ -24,8 +25,6 @@ module "yandex_compute_instance" {
 
   preemptible = false
 
-  image_id = "fd8dpupkt886ut5m0j2o" # ubuntu-2204-lts
-
   hostname                  = "my-instance"
   allow_stopping_for_update = true
   generate_ssh_key          = false
@@ -44,4 +43,12 @@ module "yandex_compute_instance" {
     type       = "network-ssd"
   }
 
+}
+
+output "instance_private_ip" {
+  value       = module.yandex_compute_instance.instance_private_ip
+}
+
+output "instance_public_ip" {
+  value       = module.yandex_compute_instance.instance_public_ip
 }
