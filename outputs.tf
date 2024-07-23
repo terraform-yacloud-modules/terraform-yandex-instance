@@ -5,7 +5,7 @@ output "instance_id" {
 
 output "instance_private_ip" {
   description = "Compute instance private IP"
-  value       = yandex_compute_instance.this.network_interface.0.ip_address
+  value       = yandex_compute_instance.this.network_interface[0].ip_address
 }
 
 output "instance_public_ip" {
