@@ -1,5 +1,5 @@
 module "yandex_compute_instance" {
-  source = "../"
+  source = "../../"
 
   folder_id = "xxx"
 

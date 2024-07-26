@@ -41,20 +41,19 @@ resource "yandex_compute_instance" "this" {
     preemptible = var.preemptible
   }
 
-  # TODO
-  #  placement_policy {
-  #    placement_group_id = var.placement_group_id
-  #
-  #    dynamic "host_affinity_rules" {
-  #      for_each = var.placement_affinity_rules
-  #
-  #      content {
-  #        key   = host_affinity_rules.value["key"]
-  #        op    = host_affinity_rules.value["op"]
-  #        value = host_affinity_rules.value["value"]
-  #      }
-  #    }
-  #  }
+  placement_policy {
+    placement_group_id = var.placement_group_id
+
+    dynamic "host_affinity_rules" {
+      for_each = var.placement_affinity_rules
+
+      content {
+        key    = host_affinity_rules.value["key"]
+        op     = host_affinity_rules.value["op"]
+        values = host_affinity_rules.value["value"]
+      }
+    }
+  }
 
   resources {
     cores         = var.cores
