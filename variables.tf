@@ -146,7 +146,7 @@ variable "preemptible" {
 variable "placement_group_id" {
   description = "Placement group ID"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "placement_affinity_rules" {
