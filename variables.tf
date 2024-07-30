@@ -143,21 +143,21 @@ variable "preemptible" {
   default     = false
 }
 
-# variable "placement_group_id" {
-#   description = "Placement group ID"
-#   type        = string
-#   default     = null
-# }
-#
-# variable "placement_affinity_rules" {
-#   description = "List of host affinity rules"
-#   type = list(object({
-#     key   = string
-#     op    = string
-#     value = string
-#   }))
-#   default = []
-# }
+variable "placement_group_id" {
+  description = "Placement group ID"
+  type        = string
+  default     = ""
+}
+
+variable "placement_affinity_rules" {
+  description = "List of host affinity rules"
+  type = list(object({
+    key   = string
+    op    = string
+    value = list(string)
+  }))
+  default = []
+}
 
 #
 # vm image
