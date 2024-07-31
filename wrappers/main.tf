@@ -26,6 +26,7 @@ module "wrapper" {
   preemptible                 = try(each.value.preemptible, var.defaults.preemptible, false)
   placement_group_id          = try(each.value.placement_group_id, var.defaults.placement_group_id, null)
   placement_affinity_rules    = try(each.value.placement_affinity_rules, var.defaults.placement_affinity_rules, [])
+  public_ip_address           = try(each.value.public_ip_address, var.defaults.public_ip_address, null)
   image_snapshot_id           = try(each.value.image_snapshot_id, var.defaults.image_snapshot_id, null)
   image_id                    = try(each.value.image_id, var.defaults.image_id, null)
   image_family                = try(each.value.image_family, var.defaults.image_family, "ubuntu-2004-lts")
