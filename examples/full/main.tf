@@ -5,14 +5,14 @@ module "network" {
 
   folder_id = data.yandex_client_config.client.folder_id
 
-  blank_name = "vpc-nat-gateway"
+  blank_name = "instance-vpc-nat-gateway"
   labels = {
     repo = "terraform-yacloud-modules/terraform-yandex-vpc"
   }
 
   azs = ["ru-central1-a"]
 
-  private_subnets = [["10.10.10.0/24"]]
+  private_subnets = [["10.1.10.0/24"]]
 
   create_vpc         = true
   create_nat_gateway = true
