@@ -34,7 +34,7 @@ module "wrapper" {
   service_account_id          = try(each.value.service_account_id, var.defaults.service_account_id, null)
   allow_stopping_for_update   = try(each.value.allow_stopping_for_update, var.defaults.allow_stopping_for_update, true)
   generate_ssh_key            = try(each.value.generate_ssh_key, var.defaults.generate_ssh_key, true)
-  ssh_user                    = try(each.value.ssh_user, var.defaults, "ubuntu")
+  ssh_user                    = try(each.value.ssh_user, var.defaults.ssh_user, "ubuntu")
   ssh_pubkey                  = try(each.value.ssh_pubkey, var.defaults.ssh_pubkey, null)
   user_data                   = try(each.value.user_data, var.defaults.user_data, null)
   boot_disk                   = try(each.value.boot_disk, var.defaults.boot_disk, {})
