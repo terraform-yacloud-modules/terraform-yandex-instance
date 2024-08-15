@@ -16,13 +16,15 @@ maintainers to test your changes and to keep the examples up to date for users. 
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.3 |
+| <a name="requirement_tls"></a> [tls](#requirement\_tls) | >= 3.1.0 |
+| <a name="requirement_yandex"></a> [yandex](#requirement\_yandex) | >= 0.72.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_tls"></a> [tls](#provider\_tls) | n/a |
-| <a name="provider_yandex"></a> [yandex](#provider\_yandex) | n/a |
+| <a name="provider_tls"></a> [tls](#provider\_tls) | >= 3.1.0 |
+| <a name="provider_yandex"></a> [yandex](#provider\_yandex) | >= 0.72.0 |
 
 ## Modules
 
@@ -50,9 +52,11 @@ No modules.
 | <a name="input_cores"></a> [cores](#input\_cores) | Cores allocated to the instance | `number` | `2` | no |
 | <a name="input_create_pip"></a> [create\_pip](#input\_create\_pip) | Create public IP address for instance; If true public\_ip\_address will be ignored | `bool` | `true` | no |
 | <a name="input_description"></a> [description](#input\_description) | Instance description | `string` | `null` | no |
+| <a name="input_docker_compose"></a> [docker\_compose](#input\_docker\_compose) | The key in the VM metadata that uses the docker-compose specification | `string` | `null` | no |
 | <a name="input_enable_ipv4"></a> [enable\_ipv4](#input\_enable\_ipv4) | Allocate an IPv4 address for the interface | `string` | `true` | no |
 | <a name="input_enable_ipv6"></a> [enable\_ipv6](#input\_enable\_ipv6) | Allocate an IPv6 address for the interface | `string` | `false` | no |
 | <a name="input_enable_nat"></a> [enable\_nat](#input\_enable\_nat) | Enable public IPv4 address | `bool` | `null` | no |
+| <a name="input_enable_oslogin"></a> [enable\_oslogin](#input\_enable\_oslogin) | Enable OS Login | `string` | `false` | no |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | Folder ID | `string` | `null` | no |
 | <a name="input_generate_ssh_key"></a> [generate\_ssh\_key](#input\_generate\_ssh\_key) | If true, SSH key will be generated for instance group | `string` | `true` | no |
 | <a name="input_hostname"></a> [hostname](#input\_hostname) | Hostname of the instance. More info: https://cloud.yandex.ru/docs/compute/concepts/network#hostname | `string` | `null` | no |
@@ -63,8 +67,8 @@ No modules.
 | <a name="input_memory"></a> [memory](#input\_memory) | Memory allocated to the instance (in Gb) | `number` | `2` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name which will be used for all resources | `string` | n/a | yes |
 | <a name="input_network_acceleration_type"></a> [network\_acceleration\_type](#input\_network\_acceleration\_type) | Network acceleration type | `string` | `"standard"` | no |
-| <a name="input_placement_affinity_rules"></a> [placement\_affinity\_rules](#input\_placement\_affinity\_rules) | List of host affinity rules | <pre>list(object({<br>    key   = string<br>    op    = string<br>    value = string<br>  }))</pre> | `[]` | no |
-| <a name="input_placement_group_id"></a> [placement\_group\_id](#input\_placement\_group\_id) | Placement group ID | `string` | `null` | no |
+| <a name="input_placement_affinity_rules"></a> [placement\_affinity\_rules](#input\_placement\_affinity\_rules) | List of host affinity rules | <pre>list(object({<br>    key   = string<br>    op    = string<br>    value = list(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_placement_group_id"></a> [placement\_group\_id](#input\_placement\_group\_id) | Placement group ID | `string` | `""` | no |
 | <a name="input_platform_id"></a> [platform\_id](#input\_platform\_id) | Hardware CPU platform name (Intel Ice Lake by default) | `string` | `"standard-v3"` | no |
 | <a name="input_preemptible"></a> [preemptible](#input\_preemptible) | Make instance preemptible | `bool` | `false` | no |
 | <a name="input_private_ip_address"></a> [private\_ip\_address](#input\_private\_ip\_address) | Private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet | `string` | `null` | no |
