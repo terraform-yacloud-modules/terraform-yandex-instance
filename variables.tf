@@ -103,6 +103,7 @@ variable "serial_port_enable" {
 
 variable "docker_compose" {
   description = "The key in the VM metadata that uses the docker-compose specification"
+  type        = string
   default     = null
 }
 
@@ -145,7 +146,7 @@ variable "preemptible" {
 variable "placement_group_id" {
   description = "Placement group ID"
   type        = string
-  default     = null
+  default     = ""
 }
 
 variable "placement_affinity_rules" {
@@ -153,7 +154,7 @@ variable "placement_affinity_rules" {
   type = list(object({
     key   = string
     op    = string
-    value = string
+    value = list(string)
   }))
   default = []
 }
@@ -220,6 +221,12 @@ variable "ssh_pubkey" {
   description = "Public RSA key path to inject"
   type        = string
   default     = null
+}
+
+variable "enable_oslogin" {
+  description = "Enable OS Login"
+  type        = string
+  default     = false
 }
 
 variable "user_data" {

@@ -1,17 +1,38 @@
+data "yandex_client_config" "client" {}
+
+module "network" {
+  source = "git::https://github.com/terraform-yacloud-modules/terraform-yandex-vpc.git?ref=v1.0.0"
+
+  folder_id = data.yandex_client_config.client.folder_id
+
+  blank_name = "instance-vpc-nat-gateway"
+  labels = {
+    repo = "terraform-yacloud-modules/terraform-yandex-vpc"
+  }
+
+  azs = ["ru-central1-a"]
+
+  private_subnets = [["10.1.10.0/24"]]
+
+  create_vpc         = true
+  create_nat_gateway = true
+}
+
 module "yandex_compute_instance" {
-  source = "../"
+  source = "../../"
 
-  folder_id = "xxx"
+  folder_id = data.yandex_client_config.client.folder_id
 
-  name        = "my-instance"
-  description = "Test instance"
+  name         = "my-instance"
+  description  = "Test instance"
+  image_family = "ubuntu-2204-lts"
   labels = {
     environment = "dev"
     project     = "example"
   }
 
   zone                      = "ru-central1-a"
-  subnet_id                 = "xxx"
+  subnet_id                 = module.network.private_subnets_ids[0]
   enable_nat                = true
   create_pip                = true
   network_acceleration_type = "standard"
@@ -23,8 +44,6 @@ module "yandex_compute_instance" {
   core_fraction = 100
 
   preemptible = false
-
-  image_id = "fd8dpupkt886ut5m0j2o" # ubuntu-2204-lts
 
   hostname                  = "my-instance"
   allow_stopping_for_update = true

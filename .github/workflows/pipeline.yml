@@ -38,7 +38,7 @@ jobs:
           tflint_version: ${{ env.tflint_version }}
       -
         name: Setup TFLint cache plugin dir
-        uses: actions/cache@v4.0.2
+        uses: actions/cache@v4.1.2
         with:
           path: ~/.tflint.d/plugins
           key: tflint-${{ hashFiles('.tflint.hcl') }}
@@ -60,7 +60,7 @@ jobs:
           soft_fail: true
       -
         name: Test code with Checkov
-        uses: bridgecrewio/checkov-action@v12.2823.0
+        uses: bridgecrewio/checkov-action@v12.2884.0
         with:
           directory: /
           framework: terraform
