@@ -270,6 +270,7 @@ variable "secondary_disks" {
     size        = optional(number, 10)
     block_size  = optional(number, 4096)
     device_name = optional(string)
+    disk_id     = optional(string, null)
   }))
   default = {}
 }
