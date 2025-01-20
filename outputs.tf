@@ -21,7 +21,7 @@ output "compute_disks" {
       name => merge(
         { "device_name" = value.device_name },
         yandex_compute_disk.this[name]
-      )
+      ) if value.enabled
     }
   )
 }
