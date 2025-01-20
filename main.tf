@@ -88,7 +88,7 @@ resource "yandex_compute_instance" "this" {
 
     iterator = disk
     content {
-      disk_id     = disk.value.id
+      disk_id     = disk.value.enabled == false && disk.value.disk_id != null ? disk.value.disk_id : disk.value.id
       auto_delete = disk.value.auto_delete
       device_name = disk.value.device_name
       mode        = disk.value.mode
