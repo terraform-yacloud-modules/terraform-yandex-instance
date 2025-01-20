@@ -79,11 +79,11 @@ resource "yandex_compute_instance" "this" {
   }
 
   dynamic "secondary_disk" {
+    # Determine the list of secondary disks to attach to the instance from created disks or from the provided configuration with disk_id
     for_each = (
-      {
-        for disk_name, disk_info in yandex_compute_disk.this :
-        disk_name => merge(disk_info, var.secondary_disks[disk_name])
-      }
+      length(yandex_compute_disk.this) > 0 ?
+      { for disk_name, disk_info in yandex_compute_disk.this : disk_name => merge(disk_info, var.secondary_disks[disk_name]) } :
+      var.secondary_disks
     )
 
     iterator = disk
