@@ -109,8 +109,4 @@ resource "yandex_compute_instance" "this" {
     # ipv6_dns_record{}
     # nat_dns_record {}
   }
-
-  lifecycle {
-    ignore_changes = [boot_disk]
-  }
 }
