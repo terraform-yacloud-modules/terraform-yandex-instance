@@ -49,7 +49,7 @@ resource "yandex_compute_instance" "this" {
     docker-compose     = var.docker_compose == null ? null : file(var.docker_compose)
     serial-port-enable = var.serial_port_enable ? 1 : null
     enable-oslogin     = var.enable_oslogin
-    user-data          = join(local.cloud_init_user_data, var.user_data)
+    user-data = join("\n", compact([local.cloud_init_user_data, var.user_data]))
   }
   metadata_options {}
 
