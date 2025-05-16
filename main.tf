@@ -5,8 +5,26 @@ locals {
       var.image_id,
       data.yandex_compute_image.this.id
   ))
-  ssh_keys           = var.generate_ssh_key ? "${var.ssh_user}:${tls_private_key.this[0].public_key_openssh}" : (var.ssh_pubkey != null ? "${var.ssh_user}:${file(var.ssh_pubkey)}" : null)
   instance_public_ip = var.create_pip ? yandex_vpc_address.main[0].external_ipv4_address[0].address : var.public_ip_address
+  # Get SSH public key: generate, use provided, or read from file
+  ssh_authorized_key = var.generate_ssh_key ? tls_private_key.this[0].public_key_openssh : (
+    var.ssh_pubkey != null ? (
+      can(regex("^ssh-", var.ssh_pubkey)) ? var.ssh_pubkey : file(var.ssh_pubkey)
+    ) : null
+  )
+  cloud_init_user_data = var.user_data != null ? var.user_data : (
+    var.ssh_user != null && local.ssh_authorized_key != null ?
+      join("\n", [
+        "#cloud-config",
+        "users:",
+        "  - name: ${var.ssh_user}",
+        "    groups: sudo",
+        "    shell: /bin/bash",
+        "    sudo: 'ALL=(ALL) NOPASSWD:ALL'",
+        "    ssh-authorized-keys:",
+        "      - ${local.ssh_authorized_key}"
+      ]) : null
+  )
 }
 
 resource "tls_private_key" "this" {
@@ -30,9 +48,8 @@ resource "yandex_compute_instance" "this" {
   metadata = {
     docker-compose     = var.docker_compose == null ? null : file(var.docker_compose)
     serial-port-enable = var.serial_port_enable ? 1 : null
-    ssh-keys           = local.ssh_keys
     enable-oslogin     = var.enable_oslogin
-    user-data          = var.user_data
+    user-data          = join(local.cloud_init_user_data, var.user_data)
   }
   metadata_options {}
 
