@@ -25,6 +25,11 @@ locals {
         "      - ${local.ssh_authorized_key}"
       ]) : null
   )
+  user_data_metadata = (
+    local.cloud_init_user_data != null && local.cloud_init_user_data != var.user_data
+    ? join("\n", compact([local.cloud_init_user_data, var.user_data]))
+    : coalesce(local.cloud_init_user_data, var.user_data)
+  )
 }
 
 resource "tls_private_key" "this" {
@@ -49,9 +54,7 @@ resource "yandex_compute_instance" "this" {
     docker-compose     = var.docker_compose == null ? null : file(var.docker_compose)
     serial-port-enable = var.serial_port_enable ? 1 : null
     enable-oslogin     = var.enable_oslogin
-    user-data = local.cloud_init_user_data != null && local.cloud_init_user_data != var.user_data ? 
-      join("\n", compact([local.cloud_init_user_data, var.user_data])) : 
-      coalesce(local.cloud_init_user_data, var.user_data)
+    user-data          = local.user_data_metadata
   }
   metadata_options {}
 
