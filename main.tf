@@ -14,16 +14,16 @@ locals {
   ssh_authorized_key = var.generate_ssh_key ? tls_private_key.this[0].public_key_openssh : local.ssh_pubkey_processed
   cloud_init_user_data = var.user_data != null ? var.user_data : (
     var.ssh_user != null && local.ssh_authorized_key != null ?
-      join("\n", [
-        "#cloud-config",
-        "users:",
-        "  - name: ${var.ssh_user}",
-        "    groups: sudo",
-        "    shell: /bin/bash",
-        "    sudo: 'ALL=(ALL) NOPASSWD:ALL'",
-        "    ssh-authorized-keys:",
-        "      - ${local.ssh_authorized_key}"
-      ]) : null
+    join("\n", [
+      "#cloud-config",
+      "users:",
+      "  - name: ${var.ssh_user}",
+      "    groups: sudo",
+      "    shell: /bin/bash",
+      "    sudo: 'ALL=(ALL) NOPASSWD:ALL'",
+      "    ssh-authorized-keys:",
+      "      - ${local.ssh_authorized_key}"
+    ]) : null
   )
   user_data_metadata = (
     local.cloud_init_user_data != null && local.cloud_init_user_data != var.user_data
@@ -54,6 +54,7 @@ resource "yandex_compute_instance" "this" {
     docker-compose     = var.docker_compose == null ? null : file(var.docker_compose)
     serial-port-enable = var.serial_port_enable ? 1 : null
     enable-oslogin     = var.enable_oslogin
+    ssh-keys           = var.ssh_pubkey == null ? null : "${var.ssh_user}:${local.ssh_authorized_key}"
     user-data          = local.user_data_metadata
   }
   metadata_options {}

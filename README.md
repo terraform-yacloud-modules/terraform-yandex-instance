@@ -46,8 +46,8 @@ No modules.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_allow_stopping_for_update"></a> [allow\_stopping\_for\_update](#input\_allow\_stopping\_for\_update) | Allow stop the instance in order to update properties | `bool` | `true` | no |
-| <a name="input_boot_disk"></a> [boot\_disk](#input\_boot\_disk) | Basic boot disk parameters | <pre>object({<br>    auto_delete = optional(bool)<br>    device_name = optional(string)<br>    mode        = optional(string)<br>    disk_id     = optional(string, null)<br>  })</pre> | `{}` | no |
-| <a name="input_boot_disk_initialize_params"></a> [boot\_disk\_initialize\_params](#input\_boot\_disk\_initialize\_params) | Additional boot disk parameters | <pre>object({<br>    size       = optional(number, 10)<br>    block_size = optional(number, 4096)<br>    type       = optional(string, "network-hdd")<br>  })</pre> | `{}` | no |
+| <a name="input_boot_disk"></a> [boot\_disk](#input\_boot\_disk) | Basic boot disk parameters | <pre>object({<br/>    auto_delete = optional(bool)<br/>    device_name = optional(string)<br/>    mode        = optional(string)<br/>    disk_id     = optional(string, null)<br/>  })</pre> | `{}` | no |
+| <a name="input_boot_disk_initialize_params"></a> [boot\_disk\_initialize\_params](#input\_boot\_disk\_initialize\_params) | Additional boot disk parameters | <pre>object({<br/>    size       = optional(number, 10)<br/>    block_size = optional(number, 4096)<br/>    type       = optional(string, "network-hdd")<br/>  })</pre> | `{}` | no |
 | <a name="input_core_fraction"></a> [core\_fraction](#input\_core\_fraction) | Core fraction applied to the instance | `number` | `null` | no |
 | <a name="input_cores"></a> [cores](#input\_cores) | Cores allocated to the instance | `number` | `2` | no |
 | <a name="input_create_pip"></a> [create\_pip](#input\_create\_pip) | Create public IP address for instance; If true public\_ip\_address will be ignored | `bool` | `true` | no |
@@ -62,19 +62,19 @@ No modules.
 | <a name="input_hostname"></a> [hostname](#input\_hostname) | Hostname of the instance. More info: https://cloud.yandex.ru/docs/compute/concepts/network#hostname | `string` | `null` | no |
 | <a name="input_image_family"></a> [image\_family](#input\_image\_family) | Default image family name (lowest priority) | `string` | `"ubuntu-2004-lts"` | no |
 | <a name="input_image_id"></a> [image\_id](#input\_image\_id) | Image ID (medium priority) | `string` | `null` | no |
-| <a name="input_image_snapshot_id"></a> [image\_snapshot\_id](#input\_image\_snapshot\_id) | Image snapshot id to initialize from.<br>Highest priority over var.image\_id<br>and var.image\_family" | `string` | `null` | no |
+| <a name="input_image_snapshot_id"></a> [image\_snapshot\_id](#input\_image\_snapshot\_id) | Image snapshot id to initialize from.<br/>Highest priority over var.image\_id<br/>and var.image\_family" | `string` | `null` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | A set of labels which will be applied to all resources | `map(string)` | `{}` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | Memory allocated to the instance (in Gb) | `number` | `2` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name which will be used for all resources | `string` | n/a | yes |
 | <a name="input_network_acceleration_type"></a> [network\_acceleration\_type](#input\_network\_acceleration\_type) | Network acceleration type | `string` | `"standard"` | no |
-| <a name="input_placement_affinity_rules"></a> [placement\_affinity\_rules](#input\_placement\_affinity\_rules) | List of host affinity rules | <pre>list(object({<br>    key   = string<br>    op    = string<br>    value = list(string)<br>  }))</pre> | `[]` | no |
+| <a name="input_placement_affinity_rules"></a> [placement\_affinity\_rules](#input\_placement\_affinity\_rules) | List of host affinity rules | <pre>list(object({<br/>    key   = string<br/>    op    = string<br/>    value = list(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_placement_group_id"></a> [placement\_group\_id](#input\_placement\_group\_id) | Placement group ID | `string` | `""` | no |
 | <a name="input_platform_id"></a> [platform\_id](#input\_platform\_id) | Hardware CPU platform name (Intel Ice Lake by default) | `string` | `"standard-v3"` | no |
 | <a name="input_preemptible"></a> [preemptible](#input\_preemptible) | Make instance preemptible | `bool` | `false` | no |
 | <a name="input_private_ip_address"></a> [private\_ip\_address](#input\_private\_ip\_address) | Private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet | `string` | `null` | no |
 | <a name="input_private_ipv6_address"></a> [private\_ipv6\_address](#input\_private\_ipv6\_address) | Private IPv6 address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet | `string` | `null` | no |
 | <a name="input_public_ip_address"></a> [public\_ip\_address](#input\_public\_ip\_address) | Public IP address to assign to the instance | `string` | `null` | no |
-| <a name="input_secondary_disks"></a> [secondary\_disks](#input\_secondary\_disks) | Additional disks with params | <pre>map(object({<br>    enabled     = optional(bool, true)<br>    auto_delete = optional(bool, false)<br>    mode        = optional(string)<br>    labels      = optional(map(string), {})<br>    type        = optional(string, "network-hdd")<br>    size        = optional(number, 10)<br>    block_size  = optional(number, 4096)<br>    device_name = optional(string)<br>  }))</pre> | `{}` | no |
+| <a name="input_secondary_disks"></a> [secondary\_disks](#input\_secondary\_disks) | Additional disks with params | <pre>map(object({<br/>    enabled     = optional(bool, true)<br/>    auto_delete = optional(bool, false)<br/>    mode        = optional(string)<br/>    labels      = optional(map(string), {})<br/>    type        = optional(string, "network-hdd")<br/>    size        = optional(number, 10)<br/>    block_size  = optional(number, 4096)<br/>    device_name = optional(string)<br/>  }))</pre> | `{}` | no |
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | Security group IDs linked to the instance | `list(string)` | `null` | no |
 | <a name="input_serial_port_enable"></a> [serial\_port\_enable](#input\_serial\_port\_enable) | Enable serial port on the instance | `bool` | `false` | no |
 | <a name="input_service_account_id"></a> [service\_account\_id](#input\_service\_account\_id) | ID of the service account authorized for instance | `string` | `null` | no |
