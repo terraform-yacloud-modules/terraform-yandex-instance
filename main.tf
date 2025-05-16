@@ -7,11 +7,11 @@ locals {
   ))
   instance_public_ip = var.create_pip ? yandex_vpc_address.main[0].external_ipv4_address[0].address : var.public_ip_address
   # Get SSH public key: generate, use provided, or read from file
-  ssh_authorized_key = var.generate_ssh_key ? tls_private_key.this[0].public_key_openssh : (
-    var.ssh_pubkey != null ? (
-      can(regex("^ssh-", var.ssh_pubkey)) ? var.ssh_pubkey : file(var.ssh_pubkey)
-    ) : null
-  )
+  ssh_pubkey_processed = var.ssh_pubkey != null ? (
+    can(regex("^ssh-", var.ssh_pubkey)) ? var.ssh_pubkey : file(var.ssh_pubkey)
+  ) : null
+
+  ssh_authorized_key = var.generate_ssh_key ? tls_private_key.this[0].public_key_openssh : local.ssh_pubkey_processed
   cloud_init_user_data = var.user_data != null ? var.user_data : (
     var.ssh_user != null && local.ssh_authorized_key != null ?
       join("\n", [
