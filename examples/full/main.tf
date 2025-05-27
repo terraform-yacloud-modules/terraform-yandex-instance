@@ -51,6 +51,39 @@ module "yandex_compute_instance" {
   ssh_user                  = "ubuntu"
   ssh_pubkey                = "~/.ssh/id_rsa.pub"
 
+  enable_oslogin  = false
+
+  user_data = <<-EOF
+#cloud-config
+packages:
+  - nginx
+  - htop
+  - curl
+  - wget
+
+runcmd:
+  - systemctl enable nginx
+  - systemctl start nginx
+  - echo "Сервер успешно настроен" > /var/log/setup.log
+
+write_files:
+  - path: /etc/nginx/sites-available/default
+    content: |
+      server {
+          listen 80 default_server;
+          listen [::]:80 default_server;
+
+          root /var/www/html;
+          index index.html index.htm index.nginx-debian.html;
+
+          server_name _;
+
+          location / {
+              try_files $uri $uri/ =404;
+          }
+      }
+EOF
+
   boot_disk = {
     auto_delete = true
     device_name = "boot-disk"
@@ -61,6 +94,21 @@ module "yandex_compute_instance" {
     size       = 20
     block_size = 4096
     type       = "network-ssd"
+  }
+
+  secondary_disks = {
+    "data" = {
+      enabled     = true
+      auto_delete = false
+      mode       = "READ_WRITE"
+      type       = "network-hdd"
+      size       = 100
+      block_size = 4096
+      device_name = "data-disk"
+      labels = {
+        purpose = "application-data"
+      }
+    }
   }
 
 }
