@@ -94,8 +94,9 @@ jobs:
       -
         name: Set application version
         id: set_version
-        uses: kvendingoldo/semver-action@v1.20
+        uses: kvendingoldo/git-flow-action@v2.0.1
         with:
-          enable_github_releases: true
-          release_tag_prefix: "v"
+          enable_github_release: true
+          auto_release_branches: main
+          tag_prefix_release: "v"
           github_token: "${{ secrets.GITHUB_TOKEN }}"
