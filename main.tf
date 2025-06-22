@@ -24,6 +24,8 @@ resource "yandex_compute_instance" "this" {
   zone     = var.zone
   hostname = var.hostname
 
+  maintenance_grace_period  = var.maintenance_grace_period
+  maintenance_policy        = var.maintenance_policy
   service_account_id        = var.service_account_id
   allow_stopping_for_update = var.allow_stopping_for_update
 
