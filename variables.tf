@@ -193,6 +193,16 @@ variable "hostname" {
   default     = null
 }
 
+variable "maintenance_grace_period" {
+  description = "Time between notification via metadata service and maintenance. Can be: 60s. The default is null."
+  default     = null
+}
+
+variable "maintenance_policy" {
+  description = "Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is null."
+  default     = null
+}
+
 variable "service_account_id" {
   description = "ID of the service account authorized for instance"
   type        = string
