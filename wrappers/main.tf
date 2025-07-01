@@ -40,4 +40,5 @@ module "wrapper" {
   boot_disk                   = try(each.value.boot_disk, var.defaults.boot_disk, {})
   boot_disk_initialize_params = try(each.value.boot_disk_initialize_params, var.defaults.boot_disk_initialize_params, {})
   secondary_disks             = try(each.value.secondary_disks, var.defaults.secondary_disks, {})
+  enable_oslogin              = try(each.value.enable_oslogin, var.defaults.enable_oslogin, false)
 }
