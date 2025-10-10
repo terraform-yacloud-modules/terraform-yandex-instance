@@ -51,7 +51,7 @@ module "yandex_compute_instance" {
   ssh_user                  = "ubuntu"
   ssh_pubkey                = "~/.ssh/id_rsa.pub"
 
-  enable_oslogin  = false
+  enable_oslogin = false
 
   user_data = <<-EOF
 #cloud-config
@@ -100,10 +100,10 @@ EOF
     "data" = {
       enabled     = true
       auto_delete = false
-      mode       = "READ_WRITE"
-      type       = "network-hdd"
-      size       = 100
-      block_size = 4096
+      mode        = "READ_WRITE"
+      type        = "network-hdd"
+      size        = 100
+      block_size  = 4096
       device_name = "data-disk"
       labels = {
         purpose = "application-data"
