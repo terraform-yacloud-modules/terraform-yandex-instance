@@ -83,6 +83,7 @@ No modules.
 | <a name="input_ssh_pubkey"></a> [ssh\_pubkey](#input\_ssh\_pubkey) | Public RSA key path to inject | `string` | `null` | no |
 | <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | Initial SSH username for instance | `string` | `"ubuntu"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | VPC Subnet ID | `string` | n/a | yes |
+| <a name="input_timeouts"></a> [timeouts](#input\_timeouts) | Timeout settings for cluster operations | <pre>object({<br/>    create = optional(string)<br/>    update = optional(string)<br/>    delete = optional(string)<br/>  })</pre> | `null` | no |
 | <a name="input_user_data"></a> [user\_data](#input\_user\_data) | Cloud-init user-data | `string` | `null` | no |
 | <a name="input_zone"></a> [zone](#input\_zone) | Network zone | `string` | `null` | no |
 

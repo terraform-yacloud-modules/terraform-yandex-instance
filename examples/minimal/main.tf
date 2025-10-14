@@ -35,4 +35,11 @@ module "yandex_compute_instance" {
   ssh_user         = "ubuntu"
   ssh_pubkey       = "~/.ssh/id_rsa.pub"
 
+
+  timeouts = {
+    create = "40m"
+    update = "40m"
+    delete = "40m"
+  }
+
 }

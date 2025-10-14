@@ -111,4 +111,15 @@ resource "yandex_compute_instance" "this" {
     # ipv6_dns_record{}
     # nat_dns_record {}
   }
+
+
+  dynamic "timeouts" {
+    for_each = var.timeouts == null ? [] : [var.timeouts]
+    content {
+      create = try(timeouts.value.create, null)
+      update = try(timeouts.value.update, null)
+      delete = try(timeouts.value.delete, null)
+    }
+  }
+
 }
