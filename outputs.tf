@@ -37,3 +37,38 @@ output "ssh_key_prv" {
   sensitive   = true
   value       = var.generate_ssh_key ? tls_private_key.this[0].private_key_pem : null
 }
+
+output "instance_fqdn" {
+  description = "Compute instance FQDN"
+  value       = yandex_compute_instance.this.fqdn
+}
+
+output "instance_status" {
+  description = "Compute instance status"
+  value       = yandex_compute_instance.this.status
+}
+
+output "instance_created_at" {
+  description = "Compute instance creation timestamp"
+  value       = yandex_compute_instance.this.created_at
+}
+
+output "gpu_cluster_id" {
+  description = "GPU cluster ID if instance is part of it"
+  value       = var.gpu_cluster_id
+}
+
+output "filesystems" {
+  description = "Attached filesystems data"
+  value       = var.filesystems
+}
+
+output "dns_records" {
+  description = "Configured DNS records"
+  value       = var.dns_records
+}
+
+output "metadata_options" {
+  description = "Configured metadata options"
+  value       = var.metadata_options
+}
