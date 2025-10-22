@@ -195,11 +195,13 @@ variable "hostname" {
 
 variable "maintenance_grace_period" {
   description = "Time between notification via metadata service and maintenance. Can be: 60s. The default is null."
+  type        = string
   default     = null
 }
 
 variable "maintenance_policy" {
   description = "Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is null."
+  type        = string
   default     = null
 }
 
@@ -375,20 +377,6 @@ variable "metadata_options" {
   default = null
 }
 
-#
-# Additional network interface parameters
-#
-variable "network_id" {
-  description = "Network ID for the network interface"
-  type        = string
-  default     = null
-}
-
-variable "index" {
-  description = "Index of network interface"
-  type        = number
-  default     = null
-}
 
 #
 # Additional boot disk parameters

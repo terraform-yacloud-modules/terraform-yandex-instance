@@ -139,7 +139,4 @@ EOF
   boot_disk_name        = "my-instance-boot-disk"
   boot_disk_description = "Boot disk for my instance with custom settings"
 
-  # Дополнительные параметры сети
-  network_id = module.network.vpc_id # ID сети из модуля VPC
-
 }

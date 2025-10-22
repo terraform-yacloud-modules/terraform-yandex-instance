@@ -70,17 +70,15 @@ No modules.
 | <a name="input_image_family"></a> [image\_family](#input\_image\_family) | Default image family name (lowest priority) | `string` | `"ubuntu-2004-lts"` | no |
 | <a name="input_image_id"></a> [image\_id](#input\_image\_id) | Image ID (medium priority) | `string` | `null` | no |
 | <a name="input_image_snapshot_id"></a> [image\_snapshot\_id](#input\_image\_snapshot\_id) | Image snapshot id to initialize from.<br/>Highest priority over var.image\_id<br/>and var.image\_family" | `string` | `null` | no |
-| <a name="input_index"></a> [index](#input\_index) | Index of network interface | `number` | `null` | no |
 | <a name="input_ipv6_dns_records"></a> [ipv6\_dns\_records](#input\_ipv6\_dns\_records) | DNS records for IPv6 addresses | <pre>list(object({<br/>    fqdn        = string<br/>    dns_zone_id = optional(string)<br/>    ttl         = optional(number)<br/>    ptr         = optional(bool)<br/>  }))</pre> | `[]` | no |
 | <a name="input_labels"></a> [labels](#input\_labels) | A set of labels which will be applied to all resources | `map(string)` | `{}` | no |
-| <a name="input_maintenance_grace_period"></a> [maintenance\_grace\_period](#input\_maintenance\_grace\_period) | Time between notification via metadata service and maintenance. Can be: 60s. The default is null. | `any` | `null` | no |
-| <a name="input_maintenance_policy"></a> [maintenance\_policy](#input\_maintenance\_policy) | Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is null. | `any` | `null` | no |
+| <a name="input_maintenance_grace_period"></a> [maintenance\_grace\_period](#input\_maintenance\_grace\_period) | Time between notification via metadata service and maintenance. Can be: 60s. The default is null. | `string` | `null` | no |
+| <a name="input_maintenance_policy"></a> [maintenance\_policy](#input\_maintenance\_policy) | Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is null. | `string` | `null` | no |
 | <a name="input_memory"></a> [memory](#input\_memory) | Memory allocated to the instance (in Gb) | `number` | `2` | no |
 | <a name="input_metadata_options"></a> [metadata\_options](#input\_metadata\_options) | Options to configure access to instance's metadata | <pre>object({<br/>    gce_http_endpoint    = optional(string)<br/>    aws_v1_http_endpoint = optional(string)<br/>    gce_http_token       = optional(string)<br/>    aws_v1_http_token    = optional(string)<br/>  })</pre> | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | Name which will be used for all resources | `string` | n/a | yes |
 | <a name="input_nat_dns_records"></a> [nat\_dns\_records](#input\_nat\_dns\_records) | DNS records for NAT IPv4 addresses | <pre>list(object({<br/>    fqdn        = string<br/>    dns_zone_id = optional(string)<br/>    ttl         = optional(number)<br/>    ptr         = optional(bool)<br/>  }))</pre> | `[]` | no |
 | <a name="input_network_acceleration_type"></a> [network\_acceleration\_type](#input\_network\_acceleration\_type) | Network acceleration type | `string` | `"standard"` | no |
-| <a name="input_network_id"></a> [network\_id](#input\_network\_id) | Network ID for the network interface | `string` | `null` | no |
 | <a name="input_placement_affinity_rules"></a> [placement\_affinity\_rules](#input\_placement\_affinity\_rules) | List of host affinity rules | <pre>list(object({<br/>    key   = string<br/>    op    = string<br/>    value = list(string)<br/>  }))</pre> | `[]` | no |
 | <a name="input_placement_group_id"></a> [placement\_group\_id](#input\_placement\_group\_id) | Placement group ID | `string` | `""` | no |
 | <a name="input_platform_id"></a> [platform\_id](#input\_platform\_id) | Hardware CPU platform name (Intel Ice Lake by default) | `string` | `"standard-v3"` | no |
