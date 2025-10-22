@@ -37,10 +37,10 @@ resource "yandex_compute_instance" "this" {
     user-data          = var.user_data
   }
   metadata_options {
-    gce_http_endpoint = var.metadata_options != null ? try(var.metadata_options.gce_http_endpoint, null) : null
+    gce_http_endpoint    = var.metadata_options != null ? try(var.metadata_options.gce_http_endpoint, null) : null
     aws_v1_http_endpoint = var.metadata_options != null ? try(var.metadata_options.aws_v1_http_endpoint, null) : null
-    gce_http_token = var.metadata_options != null ? try(var.metadata_options.gce_http_token, null) : null
-    aws_v1_http_token = var.metadata_options != null ? try(var.metadata_options.aws_v1_http_token, null) : null
+    gce_http_token       = var.metadata_options != null ? try(var.metadata_options.gce_http_token, null) : null
+    aws_v1_http_token    = var.metadata_options != null ? try(var.metadata_options.aws_v1_http_token, null) : null
   }
 
   platform_id = var.platform_id
@@ -129,30 +129,30 @@ resource "yandex_compute_instance" "this" {
     dynamic "dns_record" {
       for_each = var.dns_records
       content {
-        fqdn       = dns_record.value.fqdn
+        fqdn        = dns_record.value.fqdn
         dns_zone_id = dns_record.value.dns_zone_id
-        ttl        = dns_record.value.ttl
-        ptr        = dns_record.value.ptr
+        ttl         = dns_record.value.ttl
+        ptr         = dns_record.value.ptr
       }
     }
 
     dynamic "ipv6_dns_record" {
       for_each = var.ipv6_dns_records
       content {
-        fqdn       = ipv6_dns_record.value.fqdn
+        fqdn        = ipv6_dns_record.value.fqdn
         dns_zone_id = ipv6_dns_record.value.dns_zone_id
-        ttl        = ipv6_dns_record.value.ttl
-        ptr        = ipv6_dns_record.value.ptr
+        ttl         = ipv6_dns_record.value.ttl
+        ptr         = ipv6_dns_record.value.ptr
       }
     }
 
     dynamic "nat_dns_record" {
       for_each = var.nat_dns_records
       content {
-        fqdn       = nat_dns_record.value.fqdn
+        fqdn        = nat_dns_record.value.fqdn
         dns_zone_id = nat_dns_record.value.dns_zone_id
-        ttl        = nat_dns_record.value.ttl
-        ptr        = nat_dns_record.value.ptr
+        ttl         = nat_dns_record.value.ttl
+        ptr         = nat_dns_record.value.ptr
       }
     }
   }

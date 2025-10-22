@@ -300,10 +300,10 @@ variable "timeouts" {
 variable "dns_records" {
   description = "DNS records for IPv4 addresses"
   type = list(object({
-    fqdn       = string
+    fqdn        = string
     dns_zone_id = optional(string)
-    ttl        = optional(number)
-    ptr        = optional(bool)
+    ttl         = optional(number)
+    ptr         = optional(bool)
   }))
   default = []
 }
@@ -311,10 +311,10 @@ variable "dns_records" {
 variable "ipv6_dns_records" {
   description = "DNS records for IPv6 addresses"
   type = list(object({
-    fqdn       = string
+    fqdn        = string
     dns_zone_id = optional(string)
-    ttl        = optional(number)
-    ptr        = optional(bool)
+    ttl         = optional(number)
+    ptr         = optional(bool)
   }))
   default = []
 }
@@ -322,10 +322,10 @@ variable "ipv6_dns_records" {
 variable "nat_dns_records" {
   description = "DNS records for NAT IPv4 addresses"
   type = list(object({
-    fqdn       = string
+    fqdn        = string
     dns_zone_id = optional(string)
-    ttl        = optional(number)
-    ptr        = optional(bool)
+    ttl         = optional(number)
+    ptr         = optional(bool)
   }))
   default = []
 }
@@ -367,10 +367,10 @@ variable "gpu_cluster_id" {
 variable "metadata_options" {
   description = "Options to configure access to instance's metadata"
   type = object({
-    gce_http_endpoint = optional(string)
+    gce_http_endpoint    = optional(string)
     aws_v1_http_endpoint = optional(string)
-    gce_http_token = optional(string)
-    aws_v1_http_token = optional(string)
+    gce_http_token       = optional(string)
+    aws_v1_http_token    = optional(string)
   })
   default = null
 }
