@@ -195,11 +195,13 @@ variable "hostname" {
 
 variable "maintenance_grace_period" {
   description = "Time between notification via metadata service and maintenance. Can be: 60s. The default is null."
+  type        = string
   default     = null
 }
 
 variable "maintenance_policy" {
   description = "Behavior on maintenance events. Can be: unspecified, migrate, restart. The default is null."
+  type        = string
   default     = null
 }
 
@@ -292,4 +294,114 @@ variable "timeouts" {
     delete = optional(string)
   })
   default = null
+}
+
+#
+# DNS records
+#
+variable "dns_records" {
+  description = "DNS records for IPv4 addresses"
+  type = list(object({
+    fqdn        = string
+    dns_zone_id = optional(string)
+    ttl         = optional(number)
+    ptr         = optional(bool)
+  }))
+  default = []
+}
+
+variable "ipv6_dns_records" {
+  description = "DNS records for IPv6 addresses"
+  type = list(object({
+    fqdn        = string
+    dns_zone_id = optional(string)
+    ttl         = optional(number)
+    ptr         = optional(bool)
+  }))
+  default = []
+}
+
+variable "nat_dns_records" {
+  description = "DNS records for NAT IPv4 addresses"
+  type = list(object({
+    fqdn        = string
+    dns_zone_id = optional(string)
+    ttl         = optional(number)
+    ptr         = optional(bool)
+  }))
+  default = []
+}
+
+#
+# KMS encryption
+#
+variable "boot_disk_kms_key_id" {
+  description = "ID of KMS symmetric key used to encrypt boot disk"
+  type        = string
+  default     = null
+}
+
+variable "secondary_disks_kms_key_ids" {
+  description = "Map of KMS key IDs for secondary disks encryption"
+  type        = map(string)
+  default     = {}
+}
+
+#
+# GPU configuration
+#
+variable "gpus" {
+  description = "Number of GPU cores allocated for the instance"
+  type        = number
+  default     = 0
+}
+
+variable "gpu_cluster_id" {
+  description = "ID of GPU cluster if instance is part of it"
+  type        = string
+  default     = null
+}
+
+
+#
+# Metadata options
+#
+variable "metadata_options" {
+  description = "Options to configure access to instance's metadata"
+  type = object({
+    gce_http_endpoint    = optional(string)
+    aws_v1_http_endpoint = optional(string)
+    gce_http_token       = optional(string)
+    aws_v1_http_token    = optional(string)
+  })
+  default = null
+}
+
+
+#
+# Additional boot disk parameters
+#
+variable "boot_disk_name" {
+  description = "Name of the boot disk"
+  type        = string
+  default     = null
+}
+
+variable "boot_disk_description" {
+  description = "Description of the boot disk"
+  type        = string
+  default     = null
+}
+
+#
+# Filesystem attachments
+#
+variable "filesystems" {
+  description = "Filesystems to attach to the instance"
+  type = map(object({
+    filesystem_id = string
+    device_name   = optional(string)
+    mode          = optional(string)
+  }))
+  default = {}
 }

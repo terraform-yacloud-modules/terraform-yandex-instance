@@ -111,4 +111,32 @@ EOF
     }
   }
 
+  # Новые параметры для демонстрации
+  boot_disk_kms_key_id = null # Пример: "kms-key-id-here" для шифрования boot диска
+  secondary_disks_kms_key_ids = {
+    # "data" = "kms-key-id-for-data-disk"  # Раскомментировать для шифрования data диска
+  }
+
+  # DNS записи
+  dns_records = [
+    {
+      fqdn        = "my-instance.internal.example.com."
+      dns_zone_id = null # Использовать ID DNS зоны если есть
+      ttl         = 300
+      ptr         = true
+    }
+  ]
+
+  # Опции метаданных (значения: 0 - DISABLED, 1 - ENABLED)
+  metadata_options = {
+    gce_http_endpoint    = 1 # ENABLED
+    aws_v1_http_endpoint = 1 # ENABLED
+    gce_http_token       = 1 # REQUIRED
+    aws_v1_http_token    = 1 # REQUIRED
+  }
+
+  # Дополнительные параметры boot диска
+  boot_disk_name        = "my-instance-boot-disk"
+  boot_disk_description = "Boot disk for my instance with custom settings"
+
 }

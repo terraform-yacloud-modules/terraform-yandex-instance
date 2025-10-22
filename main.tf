@@ -36,7 +36,12 @@ resource "yandex_compute_instance" "this" {
     enable-oslogin     = var.enable_oslogin
     user-data          = var.user_data
   }
-  metadata_options {}
+  metadata_options {
+    gce_http_endpoint    = var.metadata_options != null ? try(var.metadata_options.gce_http_endpoint, null) : null
+    aws_v1_http_endpoint = var.metadata_options != null ? try(var.metadata_options.aws_v1_http_endpoint, null) : null
+    gce_http_token       = var.metadata_options != null ? try(var.metadata_options.gce_http_token, null) : null
+    aws_v1_http_token    = var.metadata_options != null ? try(var.metadata_options.aws_v1_http_token, null) : null
+  }
 
   platform_id = var.platform_id
   scheduling_policy {
@@ -57,10 +62,13 @@ resource "yandex_compute_instance" "this" {
     }
   }
 
+  gpu_cluster_id = var.gpu_cluster_id
+
   resources {
     cores         = var.cores
     memory        = var.memory
     core_fraction = var.core_fraction
+    gpus          = var.gpus > 0 ? var.gpus : null
   }
 
   boot_disk {
@@ -70,13 +78,14 @@ resource "yandex_compute_instance" "this" {
     disk_id     = var.boot_disk.disk_id
 
     initialize_params {
-      name        = format("%s-boot-disk", var.name)
-      description = ""
+      name        = coalesce(var.boot_disk_name, format("%s-boot-disk", var.name))
+      description = var.boot_disk_description
       size        = var.boot_disk_initialize_params.size
       block_size  = var.boot_disk_initialize_params.block_size
       type        = var.boot_disk_initialize_params.type
       image_id    = local.use_snapshot ? null : local.image_id
       snapshot_id = local.use_snapshot ? var.image_snapshot_id : null
+      kms_key_id  = var.boot_disk_kms_key_id
     }
   }
 
@@ -97,6 +106,15 @@ resource "yandex_compute_instance" "this" {
     }
   }
 
+  dynamic "filesystem" {
+    for_each = var.filesystems
+    content {
+      filesystem_id = filesystem.value.filesystem_id
+      device_name   = filesystem.value.device_name
+      mode          = filesystem.value.mode
+    }
+  }
+
   network_acceleration_type = var.network_acceleration_type
   network_interface {
     subnet_id          = var.subnet_id
@@ -107,9 +125,36 @@ resource "yandex_compute_instance" "this" {
     nat                = var.enable_nat
     nat_ip_address     = local.instance_public_ip
     security_group_ids = var.security_group_ids
-    # dns_record {}
-    # ipv6_dns_record{}
-    # nat_dns_record {}
+
+    dynamic "dns_record" {
+      for_each = var.dns_records
+      content {
+        fqdn        = dns_record.value.fqdn
+        dns_zone_id = dns_record.value.dns_zone_id
+        ttl         = dns_record.value.ttl
+        ptr         = dns_record.value.ptr
+      }
+    }
+
+    dynamic "ipv6_dns_record" {
+      for_each = var.ipv6_dns_records
+      content {
+        fqdn        = ipv6_dns_record.value.fqdn
+        dns_zone_id = ipv6_dns_record.value.dns_zone_id
+        ttl         = ipv6_dns_record.value.ttl
+        ptr         = ipv6_dns_record.value.ptr
+      }
+    }
+
+    dynamic "nat_dns_record" {
+      for_each = var.nat_dns_records
+      content {
+        fqdn        = nat_dns_record.value.fqdn
+        dns_zone_id = nat_dns_record.value.dns_zone_id
+        ttl         = nat_dns_record.value.ttl
+        ptr         = nat_dns_record.value.ptr
+      }
+    }
   }
 
 

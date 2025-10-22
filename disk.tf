@@ -11,6 +11,9 @@ resource "yandex_compute_disk" "this" {
   block_size = each.value.block_size
   labels     = each.value.labels
 
+  # KMS encryption for secondary disks
+  kms_key_id = lookup(var.secondary_disks_kms_key_ids, each.key, null)
+
   dynamic "timeouts" {
     for_each = var.timeouts == null ? [] : [var.timeouts]
     content {
