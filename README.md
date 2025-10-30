@@ -57,13 +57,13 @@ No modules.
 | <a name="input_description"></a> [description](#input\_description) | Instance description | `string` | `null` | no |
 | <a name="input_dns_records"></a> [dns\_records](#input\_dns\_records) | DNS records for IPv4 addresses | <pre>list(object({<br/>    fqdn        = string<br/>    dns_zone_id = optional(string)<br/>    ttl         = optional(number)<br/>    ptr         = optional(bool)<br/>  }))</pre> | `[]` | no |
 | <a name="input_docker_compose"></a> [docker\_compose](#input\_docker\_compose) | The key in the VM metadata that uses the docker-compose specification | `string` | `null` | no |
-| <a name="input_enable_ipv4"></a> [enable\_ipv4](#input\_enable\_ipv4) | Allocate an IPv4 address for the interface | `string` | `true` | no |
-| <a name="input_enable_ipv6"></a> [enable\_ipv6](#input\_enable\_ipv6) | Allocate an IPv6 address for the interface | `string` | `false` | no |
+| <a name="input_enable_ipv4"></a> [enable\_ipv4](#input\_enable\_ipv4) | Allocate an IPv4 address for the interface | `bool` | `true` | no |
+| <a name="input_enable_ipv6"></a> [enable\_ipv6](#input\_enable\_ipv6) | Allocate an IPv6 address for the interface | `bool` | `false` | no |
 | <a name="input_enable_nat"></a> [enable\_nat](#input\_enable\_nat) | Enable public IPv4 address | `bool` | `null` | no |
-| <a name="input_enable_oslogin"></a> [enable\_oslogin](#input\_enable\_oslogin) | Enable OS Login | `string` | `false` | no |
+| <a name="input_enable_oslogin"></a> [enable\_oslogin](#input\_enable\_oslogin) | Enable OS Login | `bool` | `false` | no |
 | <a name="input_filesystems"></a> [filesystems](#input\_filesystems) | Filesystems to attach to the instance | <pre>map(object({<br/>    filesystem_id = string<br/>    device_name   = optional(string)<br/>    mode          = optional(string)<br/>  }))</pre> | `{}` | no |
 | <a name="input_folder_id"></a> [folder\_id](#input\_folder\_id) | Folder ID | `string` | `null` | no |
-| <a name="input_generate_ssh_key"></a> [generate\_ssh\_key](#input\_generate\_ssh\_key) | If true, SSH key will be generated for instance group | `string` | `true` | no |
+| <a name="input_generate_ssh_key"></a> [generate\_ssh\_key](#input\_generate\_ssh\_key) | If true, SSH key will be generated for instance group | `bool` | `true` | no |
 | <a name="input_gpu_cluster_id"></a> [gpu\_cluster\_id](#input\_gpu\_cluster\_id) | ID of GPU cluster if instance is part of it | `string` | `null` | no |
 | <a name="input_gpus"></a> [gpus](#input\_gpus) | Number of GPU cores allocated for the instance | `number` | `0` | no |
 | <a name="input_hostname"></a> [hostname](#input\_hostname) | Hostname of the instance. More info: https://cloud.yandex.ru/docs/compute/concepts/network#hostname | `string` | `null` | no |

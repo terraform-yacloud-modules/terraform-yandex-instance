@@ -13,6 +13,16 @@ variable "folder_id" {
 variable "name" {
   description = "Name which will be used for all resources"
   type        = string
+
+  validation {
+    condition     = length(var.name) > 0 && length(var.name) <= 63
+    error_message = "Name must be between 1 and 63 characters long."
+  }
+
+  validation {
+    condition     = can(regex("^[a-z]([-a-z0-9]*[a-z0-9])?$", var.name))
+    error_message = "Name must start with a lowercase letter and can only contain lowercase letters, numbers, and hyphens."
+  }
 }
 
 variable "description" {
@@ -34,6 +44,7 @@ variable "zone" {
   description = "Network zone"
   type        = string
   default     = null
+
 }
 
 variable "subnet_id" {
@@ -57,11 +68,16 @@ variable "public_ip_address" {
   description = "Public IP address to assign to the instance"
   type        = string
   default     = null
+
+  validation {
+    condition     = var.public_ip_address == null || can(cidrhost("${var.public_ip_address}/32", 0))
+    error_message = "Public IP address must be a valid IPv4 address or null."
+  }
 }
 
 variable "enable_ipv4" {
   description = "Allocate an IPv4 address for the interface"
-  type        = string
+  type        = bool
   default     = true
 }
 
@@ -69,11 +85,16 @@ variable "private_ip_address" {
   description = "Private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet"
   type        = string
   default     = null
+
+  validation {
+    condition     = var.private_ip_address == null || can(cidrhost("${var.private_ip_address}/32", 0))
+    error_message = "Private IP address must be a valid IPv4 address or null."
+  }
 }
 
 variable "enable_ipv6" {
   description = "Allocate an IPv6 address for the interface"
-  type        = string
+  type        = bool
   default     = false
 }
 
@@ -93,6 +114,11 @@ variable "network_acceleration_type" {
   description = "Network acceleration type"
   type        = string
   default     = "standard"
+
+  validation {
+    condition     = contains(["standard", "software-accelerated"], var.network_acceleration_type)
+    error_message = "Network acceleration type must be 'standard' or 'software-accelerated'."
+  }
 }
 
 variable "serial_port_enable" {
@@ -114,24 +140,44 @@ variable "platform_id" {
   description = "Hardware CPU platform name (Intel Ice Lake by default)"
   type        = string
   default     = "standard-v3"
+
+  validation {
+    condition     = contains(["standard-v1", "standard-v2", "standard-v3", "gpu-standard-v1"], var.platform_id)
+    error_message = "Platform ID must be one of: standard-v1, standard-v2, standard-v3, gpu-standard-v1."
+  }
 }
 
 variable "cores" {
   description = "Cores allocated to the instance"
   type        = number
   default     = 2
+
+  validation {
+    condition     = var.cores > 0 && var.cores <= 80
+    error_message = "Cores must be between 1 and 80."
+  }
 }
 
 variable "memory" {
   description = "Memory allocated to the instance (in Gb)"
   type        = number
   default     = 2
+
+  validation {
+    condition     = var.memory >= 1 && var.memory <= 640 && floor(var.memory) == var.memory
+    error_message = "Memory must be an integer between 1 and 640 GB."
+  }
 }
 
 variable "core_fraction" {
   description = "Core fraction applied to the instance"
   type        = number
   default     = null
+
+  validation {
+    condition     = var.core_fraction == null || (var.core_fraction >= 0 && var.core_fraction <= 100)
+    error_message = "Core fraction must be between 0 and 100 or null."
+  }
 }
 
 #
@@ -219,7 +265,7 @@ variable "allow_stopping_for_update" {
 
 variable "generate_ssh_key" {
   description = "If true, SSH key will be generated for instance group"
-  type        = string
+  type        = bool
   default     = true
 }
 
@@ -227,6 +273,16 @@ variable "ssh_user" {
   description = "Initial SSH username for instance"
   type        = string
   default     = "ubuntu"
+
+  validation {
+    condition     = length(var.ssh_user) > 0 && length(var.ssh_user) <= 32
+    error_message = "SSH user must be between 1 and 32 characters long."
+  }
+
+  validation {
+    condition     = can(regex("^[a-z_][a-z0-9_-]*$", var.ssh_user))
+    error_message = "SSH user must start with a letter or underscore and contain only letters, numbers, hyphens, and underscores."
+  }
 }
 
 variable "ssh_pubkey" {
@@ -237,7 +293,7 @@ variable "ssh_pubkey" {
 
 variable "enable_oslogin" {
   description = "Enable OS Login"
-  type        = string
+  type        = bool
   default     = false
 }
 
@@ -269,6 +325,27 @@ variable "boot_disk_initialize_params" {
     type       = optional(string, "network-hdd")
   })
   default = {}
+
+  validation {
+    condition = var.boot_disk_initialize_params.size == null || (
+      var.boot_disk_initialize_params.size >= 1 && var.boot_disk_initialize_params.size <= 4096
+    )
+    error_message = "Boot disk size must be between 1 and 4096 GB."
+  }
+
+  validation {
+    condition = var.boot_disk_initialize_params.block_size == null || (
+      contains([4096, 8192], var.boot_disk_initialize_params.block_size)
+    )
+    error_message = "Boot disk block size must be 4096 or 8192 bytes."
+  }
+
+  validation {
+    condition = var.boot_disk_initialize_params.type == null || (
+      contains(["network-hdd", "network-ssd", "network-ssd-nonreplicated", "local-ssd"], var.boot_disk_initialize_params.type)
+    )
+    error_message = "Boot disk type must be one of: network-hdd, network-ssd, network-ssd-nonreplicated, local-ssd."
+  }
 }
 
 variable "secondary_disks" {
@@ -284,6 +361,18 @@ variable "secondary_disks" {
     device_name = optional(string)
   }))
   default = {}
+
+  validation {
+    condition = alltrue([
+      for disk_name, disk in var.secondary_disks : (
+        (disk.size == null || (disk.size >= 1 && disk.size <= 4096)) &&
+        (disk.block_size == null || contains([4096, 8192], disk.block_size)) &&
+        (disk.type == null || contains(["network-hdd", "network-ssd", "network-ssd-nonreplicated", "local-ssd"], disk.type)) &&
+        (disk.mode == null || contains(["READ_ONLY", "READ_WRITE"], disk.mode))
+      )
+    ])
+    error_message = "Secondary disks must have valid parameters: size 1-4096 GB, block size 4096 or 8192 bytes, valid disk type, and valid mode."
+  }
 }
 
 variable "timeouts" {
@@ -354,6 +443,11 @@ variable "gpus" {
   description = "Number of GPU cores allocated for the instance"
   type        = number
   default     = 0
+
+  validation {
+    condition     = var.gpus >= 0 && var.gpus <= 8
+    error_message = "GPUs must be between 0 and 8."
+  }
 }
 
 variable "gpu_cluster_id" {
