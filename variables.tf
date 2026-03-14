@@ -116,8 +116,8 @@ variable "network_acceleration_type" {
   default     = "standard"
 
   validation {
-    condition     = contains(["standard", "software-accelerated"], var.network_acceleration_type)
-    error_message = "Network acceleration type must be 'standard' or 'software-accelerated'."
+    condition     = contains(["standard", "software_accelerated"], var.network_acceleration_type)
+    error_message = "Network acceleration type must be 'standard' or 'software_accelerated'."
   }
 }
 
@@ -175,7 +175,7 @@ variable "core_fraction" {
   default     = null
 
   validation {
-    condition     = var.core_fraction == null || (var.core_fraction >= 0 && var.core_fraction <= 100)
+    condition     = var.core_fraction == null ? true : (var.core_fraction >= 0 && var.core_fraction <= 100)
     error_message = "Core fraction must be between 0 and 100 or null."
   }
 }
@@ -461,12 +461,12 @@ variable "gpu_cluster_id" {
 # Metadata options
 #
 variable "metadata_options" {
-  description = "Options to configure access to instance's metadata"
+  description = "Options to configure access to instance's metadata (0 = DISABLED, 1 = ENABLED for endpoints; 0 = OPTIONAL, 1 = REQUIRED for tokens)"
   type = object({
-    gce_http_endpoint    = optional(string)
-    aws_v1_http_endpoint = optional(string)
-    gce_http_token       = optional(string)
-    aws_v1_http_token    = optional(string)
+    gce_http_endpoint    = optional(number)
+    aws_v1_http_endpoint = optional(number)
+    gce_http_token       = optional(number)
+    aws_v1_http_token    = optional(number)
   })
   default = null
 }
