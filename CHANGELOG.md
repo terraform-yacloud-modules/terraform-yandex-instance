@@ -1,3 +1,19 @@
+## v2.19.0 - 2026-03-15
+### Chores
+- 466075b chore(release): version v2.19.0 [skip ci]
+- 5e6d842 chore(release): version v2.19.0 [skip ci]
+
+### Miscellaneous
+- d1384e0 Align compute instance with Yandex docs ([#114](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/114))
+- e2ee030 Merge pull request [#112](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/112) from terraform-yacloud-modules/dependabot/github_actions/kvendingoldo/git-flow-action-2.16.0
+- a4439b0 Merge pull request [#113](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/113) from terraform-yacloud-modules/dependabot/github_actions/hashicorp/setup-terraform-4
+- dfc9c0c build(deps): bump hashicorp/setup-terraform from 3 to 4
+- 3de841a build(deps): bump kvendingoldo/git-flow-action from 2.2.0 to 2.16.0
+- 5a084b6 Merge pull request [#110](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/110) from terraform-yacloud-modules/dependabot/github_actions/actions/cache-5.0.3
+- 436d316 Merge pull request [#111](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/111) from MrRuban/labels
+- f465bdc add labels for yandex_vpc_address
+- 4c3887b build(deps): bump actions/cache from 5.0.1 to 5.0.3
+
 ## v2.19.0 - 2026-03-02
 ### Chores
 - 5e6d842 chore(release): version v2.19.0 [skip ci]
