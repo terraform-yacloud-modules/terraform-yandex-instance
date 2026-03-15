@@ -49,7 +49,7 @@ module "yandex_compute_instance" {
   allow_stopping_for_update = true
   generate_ssh_key          = false
   ssh_user                  = "ubuntu"
-  ssh_pubkey                = "~/.ssh/id_rsa.pub"
+  ssh_pubkey                = "~/.ssh/id_ed25519.pub"
 
   enable_oslogin = false
 
@@ -127,12 +127,12 @@ EOF
     }
   ]
 
-  # Опции метаданных (значения: 0 - DISABLED, 1 - ENABLED)
+  # Опции метаданных (endpoints: 0=DISABLED, 1=ENABLED; tokens: 0=OPTIONAL, 1=REQUIRED)
   metadata_options = {
-    gce_http_endpoint    = 1 # ENABLED
-    aws_v1_http_endpoint = 1 # ENABLED
-    gce_http_token       = 1 # REQUIRED
-    aws_v1_http_token    = 1 # REQUIRED
+    gce_http_endpoint    = 1
+    aws_v1_http_endpoint = 1
+    gce_http_token       = 1
+    aws_v1_http_token    = 1
   }
 
   # Дополнительные параметры boot диска

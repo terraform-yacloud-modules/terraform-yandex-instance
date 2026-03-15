@@ -30,10 +30,13 @@ module "yandex_compute_instance" {
   enable_nat = true
   create_pip = true
 
+  platform_id               = "standard-v3"
+  network_acceleration_type = "software_accelerated"
+
   hostname         = "minimal-instance"
   generate_ssh_key = false
   ssh_user         = "ubuntu"
-  ssh_pubkey       = "~/.ssh/id_rsa.pub"
+  ssh_pubkey       = "~/.ssh/id_ed25519.pub"
 
 
   timeouts = {
