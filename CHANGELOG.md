@@ -1,3 +1,7 @@
+## v2.20.0 - 2026-03-15
+### Chores
+- ba64ad7 chore: trigger build
+
 ## v2.19.0 - 2026-03-15
 ### Chores
 - 466075b chore(release): version v2.19.0 [skip ci]
