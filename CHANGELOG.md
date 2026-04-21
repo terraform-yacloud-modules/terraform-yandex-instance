@@ -1,3 +1,8 @@
+## v2.21.0 - 2026-04-21
+### Miscellaneous
+- efeec84 Merge pull request [#117](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/117) from orangevi/patch-1
+- 9f2050e Add 'highfreq-v3' to platform ID validation
+
 ## v2.20.0 - 2026-03-15
 ### Chores
 - ba64ad7 chore: trigger build
