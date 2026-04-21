@@ -142,8 +142,8 @@ variable "platform_id" {
   default     = "standard-v3"
 
   validation {
-    condition     = contains(["standard-v1", "standard-v2", "standard-v3", "gpu-standard-v1"], var.platform_id)
-    error_message = "Platform ID must be one of: standard-v1, standard-v2, standard-v3, gpu-standard-v1."
+    condition     = contains(["standard-v1", "standard-v2", "standard-v3", "gpu-standard-v1", "highfreq-v3"], var.platform_id)
+    error_message = "Platform ID must be one of: standard-v1, standard-v2, standard-v3, gpu-standard-v1, highfreq-v3."
   }
 }
 
