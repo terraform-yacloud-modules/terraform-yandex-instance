@@ -359,6 +359,7 @@ variable "secondary_disks" {
     size        = optional(number, 10)
     block_size  = optional(number, 4096)
     device_name = optional(string)
+    snapshot_id = optional(string)
   }))
   default = {}
 
