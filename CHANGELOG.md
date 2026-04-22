@@ -1,3 +1,10 @@
+## v2.22.0 - 2026-04-22
+### Features
+- 8c75cf7 feat(disk): add snapshot_id support for secondary disks
+
+### Miscellaneous
+- 9c955d5 Merge pull request [#118](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/118) from sanchpet/main
+
 ## v2.21.0 - 2026-04-21
 ### Miscellaneous
 - efeec84 Merge pull request [#117](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/117) from orangevi/patch-1
