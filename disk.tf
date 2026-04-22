@@ -3,13 +3,14 @@ resource "yandex_compute_disk" "this" {
     for k, v in var.secondary_disks : k => v if v["enabled"]
   }
 
-  folder_id  = var.folder_id == null ? data.yandex_client_config.client.folder_id : var.folder_id
-  zone       = var.zone
-  name       = format("%s-%s", var.name, each.key)
-  type       = each.value.type
-  size       = each.value.size
-  block_size = each.value.block_size
-  labels     = each.value.labels
+  folder_id   = var.folder_id == null ? data.yandex_client_config.client.folder_id : var.folder_id
+  zone        = var.zone
+  name        = format("%s-%s", var.name, each.key)
+  type        = each.value.type
+  size        = each.value.size
+  block_size  = each.value.block_size
+  labels      = each.value.labels
+  snapshot_id = each.value.snapshot_id
 
   # KMS encryption for secondary disks
   kms_key_id = lookup(var.secondary_disks_kms_key_ids, each.key, null)
