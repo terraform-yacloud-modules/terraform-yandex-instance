@@ -91,7 +91,8 @@ No modules.
 | <a name="input_security_group_ids"></a> [security\_group\_ids](#input\_security\_group\_ids) | Security group IDs linked to the instance | `list(string)` | `null` | no |
 | <a name="input_serial_port_enable"></a> [serial\_port\_enable](#input\_serial\_port\_enable) | Enable serial port on the instance | `bool` | `false` | no |
 | <a name="input_service_account_id"></a> [service\_account\_id](#input\_service\_account\_id) | ID of the service account authorized for instance | `string` | `null` | no |
-| <a name="input_ssh_pubkey"></a> [ssh\_pubkey](#input\_ssh\_pubkey) | Public RSA key path to inject | `string` | `null` | no |
+| <a name="input_ssh_pubkey_data"></a> [ssh\_pubkey\_data](#input\_ssh\_pubkey\_data) | Public SSH key data to inject (higher priority than ssh\_pubkey\_path). Use either this or ssh\_pubkey\_path. | `string` | `null` | no |
+| <a name="input_ssh_pubkey_path"></a> [ssh\_pubkey\_path](#input\_ssh\_pubkey\_path) | Path to public SSH key to inject (lower priority than ssh\_pubkey\_data). Use either this or ssh\_pubkey\_data. | `string` | `null` | no |
 | <a name="input_ssh_user"></a> [ssh\_user](#input\_ssh\_user) | Initial SSH username for instance | `string` | `"ubuntu"` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | VPC Subnet ID | `string` | n/a | yes |
 | <a name="input_timeouts"></a> [timeouts](#input\_timeouts) | Timeout settings for cluster operations | <pre>object({<br/>    create = optional(string)<br/>    update = optional(string)<br/>    delete = optional(string)<br/>  })</pre> | `null` | no |

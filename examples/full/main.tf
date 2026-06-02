@@ -49,7 +49,7 @@ module "yandex_compute_instance" {
   allow_stopping_for_update = true
   generate_ssh_key          = false
   ssh_user                  = "ubuntu"
-  ssh_pubkey                = "~/.ssh/id_ed25519.pub"
+  ssh_pubkey_path           = "~/.ssh/id_ed25519.pub"
 
   enable_oslogin = false
 

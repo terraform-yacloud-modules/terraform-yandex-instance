@@ -5,7 +5,7 @@ locals {
       var.image_id,
       data.yandex_compute_image.this.id
   ))
-  ssh_keys           = var.generate_ssh_key ? "${var.ssh_user}:${tls_private_key.this[0].public_key_openssh}" : (var.ssh_pubkey != null ? "${var.ssh_user}:${file(var.ssh_pubkey)}" : null)
+  ssh_keys           = var.generate_ssh_key ? "${var.ssh_user}:${tls_private_key.this[0].public_key_openssh}" : (var.ssh_pubkey_data != null ? "${var.ssh_user}:${var.ssh_pubkey_data}" : (var.ssh_pubkey_path != null ? "${var.ssh_user}:${file(var.ssh_pubkey_path)}" : null))
   instance_public_ip = var.create_pip ? yandex_vpc_address.main[0].external_ipv4_address[0].address : var.public_ip_address
 }
 

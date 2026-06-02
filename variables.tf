@@ -285,8 +285,14 @@ variable "ssh_user" {
   }
 }
 
-variable "ssh_pubkey" {
-  description = "Public RSA key path to inject"
+variable "ssh_pubkey_data" {
+  description = "Public SSH key data to inject (higher priority than ssh_pubkey_path). Use either this or ssh_pubkey_path."
+  type        = string
+  default     = null
+}
+
+variable "ssh_pubkey_path" {
+  description = "Path to public SSH key to inject (lower priority than ssh_pubkey_data). Use either this or ssh_pubkey_data."
   type        = string
   default     = null
 }

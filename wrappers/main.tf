@@ -48,7 +48,8 @@ module "wrapper" {
   allow_stopping_for_update = try(each.value.allow_stopping_for_update, var.defaults.allow_stopping_for_update, true)
   generate_ssh_key          = try(each.value.generate_ssh_key, var.defaults.generate_ssh_key, true)
   ssh_user                  = try(each.value.ssh_user, var.defaults.ssh_user, "ubuntu")
-  ssh_pubkey                = try(each.value.ssh_pubkey, var.defaults.ssh_pubkey, null)
+  ssh_pubkey_data           = try(each.value.ssh_pubkey_data, var.defaults.ssh_pubkey_data, null)
+  ssh_pubkey_path           = try(each.value.ssh_pubkey_path, var.defaults.ssh_pubkey_path, null)
   enable_oslogin            = try(each.value.enable_oslogin, var.defaults.enable_oslogin, false)
   user_data                 = try(each.value.user_data, var.defaults.user_data, null)
 
