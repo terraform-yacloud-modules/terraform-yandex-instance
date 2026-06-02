@@ -1,3 +1,7 @@
+## v2.23.0 - 2026-06-02
+### Features
+- 7fd7932 feat: add ssh_pubkey_data
+
 ## v2.22.0 - 2026-04-22
 ### Features
 - 8c75cf7 feat(disk): add snapshot_id support for secondary disks
