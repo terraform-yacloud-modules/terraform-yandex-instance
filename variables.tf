@@ -47,69 +47,6 @@ variable "zone" {
 
 }
 
-variable "subnet_id" {
-  description = "VPC Subnet ID"
-  type        = string
-}
-
-variable "enable_nat" {
-  description = "Enable public IPv4 address"
-  type        = bool
-  default     = null
-}
-
-variable "create_pip" {
-  description = "Create public IP address for instance; If true public_ip_address will be ignored"
-  type        = bool
-  default     = true
-}
-
-variable "public_ip_address" {
-  description = "Public IP address to assign to the instance"
-  type        = string
-  default     = null
-
-  validation {
-    condition     = var.public_ip_address == null || can(cidrhost("${var.public_ip_address}/32", 0))
-    error_message = "Public IP address must be a valid IPv4 address or null."
-  }
-}
-
-variable "enable_ipv4" {
-  description = "Allocate an IPv4 address for the interface"
-  type        = bool
-  default     = true
-}
-
-variable "private_ip_address" {
-  description = "Private IP address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet"
-  type        = string
-  default     = null
-
-  validation {
-    condition     = var.private_ip_address == null || can(cidrhost("${var.private_ip_address}/32", 0))
-    error_message = "Private IP address must be a valid IPv4 address or null."
-  }
-}
-
-variable "enable_ipv6" {
-  description = "Allocate an IPv6 address for the interface"
-  type        = bool
-  default     = false
-}
-
-variable "private_ipv6_address" {
-  description = "Private IPv6 address to assign to the instance. If empty, the address will be automatically assigned from the specified subnet"
-  type        = string
-  default     = null
-}
-
-variable "security_group_ids" {
-  description = "Security group IDs linked to the instance"
-  type        = list(string)
-  default     = null
-}
-
 variable "network_acceleration_type" {
   description = "Network acceleration type"
   type        = string
@@ -119,6 +56,52 @@ variable "network_acceleration_type" {
     condition     = contains(["standard", "software_accelerated"], var.network_acceleration_type)
     error_message = "Network acceleration type must be 'standard' or 'software_accelerated'."
   }
+}
+
+variable "network_interfaces" {
+  description = "List of network interfaces to attach to the instance"
+  type = list(object({
+    subnet_id          = string
+    index              = optional(number)
+    ipv4               = optional(bool, false)
+    ip_address         = optional(string)
+    ipv6               = optional(bool, false)
+    ipv6_address       = optional(string)
+    nat                = optional(bool, false)
+    nat_ip_address     = optional(string)
+    security_group_ids = optional(list(string))
+    pip = optional(object({
+      description              = optional(string)
+      deletion_protection      = optional(bool)
+      ddos_protection_provider = optional(string)
+      outgoing_smtp_capability = optional(string)
+      dns_record = optional(object({
+        fqdn        = string
+        dns_zone_id = string
+        ttl         = optional(number)
+        ptr         = optional(bool)
+      }))
+    }))
+    dns_record = optional(list(object({
+      fqdn        = string
+      dns_zone_id = optional(string)
+      ttl         = optional(number)
+      ptr         = optional(bool)
+    })), [])
+    ipv6_dns_record = optional(list(object({
+      fqdn        = string
+      dns_zone_id = optional(string)
+      ttl         = optional(number)
+      ptr         = optional(bool)
+    })), [])
+    nat_dns_record = optional(list(object({
+      fqdn        = string
+      dns_zone_id = optional(string)
+      ttl         = optional(number)
+      ptr         = optional(bool)
+    })), [])
+  }))
+  default = []
 }
 
 variable "serial_port_enable" {
@@ -390,42 +373,6 @@ variable "timeouts" {
     delete = optional(string)
   })
   default = null
-}
-
-#
-# DNS records
-#
-variable "dns_records" {
-  description = "DNS records for IPv4 addresses"
-  type = list(object({
-    fqdn        = string
-    dns_zone_id = optional(string)
-    ttl         = optional(number)
-    ptr         = optional(bool)
-  }))
-  default = []
-}
-
-variable "ipv6_dns_records" {
-  description = "DNS records for IPv6 addresses"
-  type = list(object({
-    fqdn        = string
-    dns_zone_id = optional(string)
-    ttl         = optional(number)
-    ptr         = optional(bool)
-  }))
-  default = []
-}
-
-variable "nat_dns_records" {
-  description = "DNS records for NAT IPv4 addresses"
-  type = list(object({
-    fqdn        = string
-    dns_zone_id = optional(string)
-    ttl         = optional(number)
-    ptr         = optional(bool)
-  }))
-  default = []
 }
 
 #

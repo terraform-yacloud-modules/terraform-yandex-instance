@@ -5,8 +5,7 @@ locals {
       var.image_id,
       data.yandex_compute_image.this.id
   ))
-  ssh_keys           = var.generate_ssh_key ? "${var.ssh_user}:${tls_private_key.this[0].public_key_openssh}" : (var.ssh_pubkey_data != null ? "${var.ssh_user}:${var.ssh_pubkey_data}" : (var.ssh_pubkey_path != null ? "${var.ssh_user}:${file(var.ssh_pubkey_path)}" : null))
-  instance_public_ip = var.create_pip ? yandex_vpc_address.main[0].external_ipv4_address[0].address : var.public_ip_address
+  ssh_keys = var.generate_ssh_key ? "${var.ssh_user}:${tls_private_key.this[0].public_key_openssh}" : (var.ssh_pubkey_data != null ? "${var.ssh_user}:${var.ssh_pubkey_data}" : (var.ssh_pubkey_path != null ? "${var.ssh_user}:${file(var.ssh_pubkey_path)}" : null))
 }
 
 resource "tls_private_key" "this" {
@@ -116,43 +115,49 @@ resource "yandex_compute_instance" "this" {
   }
 
   network_acceleration_type = var.network_acceleration_type
-  network_interface {
-    subnet_id          = var.subnet_id
-    ipv4               = var.enable_ipv4
-    ip_address         = var.private_ip_address
-    ipv6               = var.enable_ipv6
-    ipv6_address       = var.private_ipv6_address
-    nat                = var.enable_nat
-    nat_ip_address     = local.instance_public_ip
-    security_group_ids = var.security_group_ids
+  dynamic "network_interface" {
+    for_each = var.network_interfaces
+    iterator = ni
+    content {
+      subnet_id      = ni.value.subnet_id
+      index          = lookup(ni.value, "index", null)
+      ipv4           = lookup(ni.value, "ipv4", false)
+      ip_address     = lookup(ni.value, "ip_address", null)
+      ipv6           = lookup(ni.value, "ipv6", false)
+      ipv6_address   = lookup(ni.value, "ipv6_address", null)
+      nat            = lookup(ni.value, "nat", false)
+      nat_ip_address = lookup(ni.value, "nat", false) ? coalesce(lookup(ni.value, "nat_ip_address", null), try(yandex_vpc_address.main[ni.key].external_ipv4_address[0].address, null)) : null
 
-    dynamic "dns_record" {
-      for_each = var.dns_records
-      content {
-        fqdn        = dns_record.value.fqdn
-        dns_zone_id = dns_record.value.dns_zone_id
-        ttl         = dns_record.value.ttl
-        ptr         = dns_record.value.ptr
+      security_group_ids = lookup(ni.value, "security_group_ids", null)
+
+      dynamic "dns_record" {
+        for_each = lookup(ni.value, "dns_record", [])
+        content {
+          fqdn        = dns_record.value.fqdn
+          dns_zone_id = dns_record.value.dns_zone_id
+          ttl         = dns_record.value.ttl
+          ptr         = dns_record.value.ptr
+        }
       }
-    }
 
-    dynamic "ipv6_dns_record" {
-      for_each = var.ipv6_dns_records
-      content {
-        fqdn        = ipv6_dns_record.value.fqdn
-        dns_zone_id = ipv6_dns_record.value.dns_zone_id
-        ttl         = ipv6_dns_record.value.ttl
-        ptr         = ipv6_dns_record.value.ptr
+      dynamic "ipv6_dns_record" {
+        for_each = lookup(ni.value, "ipv6_dns_record", [])
+        content {
+          fqdn        = ipv6_dns_record.value.fqdn
+          dns_zone_id = ipv6_dns_record.value.dns_zone_id
+          ttl         = ipv6_dns_record.value.ttl
+          ptr         = ipv6_dns_record.value.ptr
+        }
       }
-    }
 
-    dynamic "nat_dns_record" {
-      for_each = var.nat_dns_records
-      content {
-        fqdn        = nat_dns_record.value.fqdn
-        dns_zone_id = nat_dns_record.value.dns_zone_id
-        ttl         = nat_dns_record.value.ttl
-        ptr         = nat_dns_record.value.ptr
+      dynamic "nat_dns_record" {
+        for_each = lookup(ni.value, "nat_dns_record", [])
+        content {
+          fqdn        = nat_dns_record.value.fqdn
+          dns_zone_id = nat_dns_record.value.dns_zone_id
+          ttl         = nat_dns_record.value.ttl
+          ptr         = nat_dns_record.value.ptr
+        }
       }
     }
   }
