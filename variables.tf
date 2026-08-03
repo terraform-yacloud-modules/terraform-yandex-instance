@@ -63,7 +63,7 @@ variable "network_interfaces" {
   type = list(object({
     subnet_id          = string
     index              = optional(number)
-    ipv4               = optional(bool, false)
+    public_ipv4        = optional(bool, false)
     ip_address         = optional(string)
     ipv6               = optional(bool, false)
     ipv6_address       = optional(string)
@@ -72,6 +72,7 @@ variable "network_interfaces" {
     security_group_ids = optional(list(string))
     pip = optional(object({
       description              = optional(string)
+      zone                     = optional(string)
       deletion_protection      = optional(bool)
       ddos_protection_provider = optional(string)
       outgoing_smtp_capability = optional(string)

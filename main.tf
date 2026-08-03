@@ -121,7 +121,7 @@ resource "yandex_compute_instance" "this" {
     content {
       subnet_id      = ni.value.subnet_id
       index          = lookup(ni.value, "index", null)
-      ipv4           = lookup(ni.value, "ipv4", false)
+      ipv4           = lookup(ni.value, "public_ipv4", false)
       ip_address     = lookup(ni.value, "ip_address", null)
       ipv6           = lookup(ni.value, "ipv6", false)
       ipv6_address   = lookup(ni.value, "ipv6_address", null)

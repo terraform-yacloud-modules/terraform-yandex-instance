@@ -12,7 +12,7 @@ resource "yandex_vpc_address" "main" {
   deletion_protection = try(each.value.pip.deletion_protection, null)
 
   external_ipv4_address {
-    zone_id                  = try(each.value.pip.ddos_protection_provider, var.zone, null)
+    zone_id                  = try(each.value.pip.zone, var.zone, null)
     ddos_protection_provider = try(each.value.pip.ddos_protection_provider, null)
     outgoing_smtp_capability = try(each.value.pip.outgoing_smtp_capability, null)
   }
