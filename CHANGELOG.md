@@ -1,3 +1,10 @@
+## v2.24.0 - 2026-08-03
+### Features
+- 62a13c0 feat: add dynamic network_interface
+
+### Miscellaneous
+- 14c7a01 Merge pull request [#119](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/119) from terraform-yacloud-modules/feat/add-dynamic-network-interface
+
 ## v2.23.0 - 2026-06-02
 ### Features
 - 7fd7932 feat: add ssh_pubkey_data
