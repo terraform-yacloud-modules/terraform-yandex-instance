@@ -31,10 +31,23 @@ module "yandex_compute_instance" {
     project     = "example"
   }
 
-  zone                      = "ru-central1-a"
-  subnet_id                 = module.network.private_subnets_ids[0]
-  enable_nat                = true
-  create_pip                = true
+  zone = "ru-central1-a"
+  network_interfaces = [
+    {
+      subnet_id = module.network.private_subnets_ids[0]
+      ipv4      = true
+      nat       = true
+      # DNS записи (в v2.x — внутри network_interfaces)
+      dns_record = [
+        {
+          fqdn        = "my-instance.internal.example.com."
+          dns_zone_id = null # Использовать ID DNS зоны если есть
+          ttl         = 300
+          ptr         = true
+        }
+      ]
+    }
+  ]
   network_acceleration_type = "standard"
   serial_port_enable        = false
 
@@ -117,17 +130,7 @@ EOF
     # "data" = "kms-key-id-for-data-disk"  # Раскомментировать для шифрования data диска
   }
 
-  # DNS записи
-  dns_records = [
-    {
-      fqdn        = "my-instance.internal.example.com."
-      dns_zone_id = null # Использовать ID DNS зоны если есть
-      ttl         = 300
-      ptr         = true
-    }
-  ]
-
-  # Опции метаданных (endpoints: 0=DISABLED, 1=ENABLED; tokens: 0=OPTIONAL, 1=REQUIRED)
+  # DNS записи (в v2.x — внутри network_interfaces)
   metadata_options = {
     gce_http_endpoint    = 1
     aws_v1_http_endpoint = 1

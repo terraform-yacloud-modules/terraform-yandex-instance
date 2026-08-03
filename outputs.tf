@@ -10,7 +10,11 @@ output "instance_private_ip" {
 
 output "instance_public_ip" {
   description = "Compute instance public IP"
-  value       = local.instance_public_ip
+  value = (
+    length(yandex_vpc_address.main) > 0
+    ? [for _, addr in yandex_vpc_address.main : addr.external_ipv4_address[0].address][0]
+    : try(var.network_interfaces[0].nat_ip_address, null)
+  )
 }
 
 output "compute_disks" {
@@ -65,7 +69,9 @@ output "filesystems" {
 
 output "dns_records" {
   description = "Configured DNS records"
-  value       = var.dns_records
+  value = flatten([
+    for ni in var.network_interfaces : lookup(ni, "dns_record", [])
+  ])
 }
 
 output "metadata_options" {

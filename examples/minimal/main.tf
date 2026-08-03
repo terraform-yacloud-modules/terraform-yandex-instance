@@ -25,10 +25,14 @@ module "yandex_compute_instance" {
 
   name = "minimal-instance"
 
-  zone       = "ru-central1-a"
-  subnet_id  = module.network.private_subnets_ids[0]
-  enable_nat = true
-  create_pip = true
+  zone = "ru-central1-a"
+  network_interfaces = [
+    {
+      subnet_id = module.network.private_subnets_ids[0]
+      ipv4      = true
+      nat       = true
+    }
+  ]
 
   platform_id               = "standard-v3"
   network_acceleration_type = "software_accelerated"
