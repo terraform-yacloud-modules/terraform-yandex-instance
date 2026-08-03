@@ -27,10 +27,10 @@ These are replaced by a single `network_interfaces` list variable.
 
 ### Changed Defaults
 
-| Behavior | v2.x | v3.x |
-|----------|------|------|
-| IPv4 on the interface | `enable_ipv4` defaulted to `true` | `network_interfaces[].ipv4` defaults to `false` — set it explicitly |
-| Public IP creation | `create_pip` defaulted to `true`, so a `yandex_vpc_address` was created even without NAT | An address is created only when `nat = true` and `nat_ip_address` is not set |
+| Behavior              | v2.x                                                                                           | v3.x                                                                            |
+| --------------------- | ---------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| IPv4 on the interface | `enable_ipv4` defaulted to `true`                                                          | `network_interfaces[].public_ipv4` defaults to `false` — set it explicitly |
+| Public IP creation    | `create_pip` defaulted to `true`, so a `yandex_vpc_address` was created even without NAT | An address is created only when`nat = true` and `nat_ip_address` is not set |
 
 Because `network_interfaces` defaults to `[]`, an instance configured without it will be created with no network interfaces at all. The list is effectively required.
 
@@ -79,10 +79,10 @@ module "instance" {
 
   network_interfaces = [
     {
-      subnet_id  = "e9b12345678901234"
-      ipv4       = true
-      ip_address = "10.0.1.10"
-      nat        = true
+      subnet_id    = "e9b12345678901234"
+      public_ipv4  = true
+      ip_address   = "10.0.1.10"
+      nat          = true
 
       security_group_ids = ["enp12345678901234"]
 
@@ -126,7 +126,7 @@ module "instance" {
   network_interfaces = [
     {
       subnet_id      = "e9b12345678901234"
-      ipv4           = true
+      public_ipv4    = true
       nat            = true
       nat_ip_address = "203.0.113.10"
     }
@@ -167,6 +167,7 @@ module "instance" {
   network_interfaces = [
     {
       subnet_id    = "e9b12345678901234"
+      public_ipv4  = true
       ipv6         = true
       ipv6_address = "2001:db8::1"
 
@@ -193,14 +194,14 @@ module "instance" {
     {
       subnet_id          = "e9b12345678901234"
       index              = 0
-      ipv4               = true
+      public_ipv4        = true
       nat                = true
       security_group_ids = ["enp12345678901234"]
     },
     {
       subnet_id          = "e9b98765432109876"
       index              = 1
-      ipv4               = true
+      public_ipv4        = true
       security_group_ids = ["enp98765432109876"]
     }
   ]
@@ -217,12 +218,13 @@ module "instance" {
 
   network_interfaces = [
     {
-      subnet_id = "e9b12345678901234"
-      ipv4      = true
-      nat       = true
+      subnet_id   = "e9b12345678901234"
+      public_ipv4 = true
+      nat         = true
 
       pip = {
         description              = "Public IP for my-instance"
+        zone                     = "ru-central1-a"
         deletion_protection      = true
         ddos_protection_provider = "qrator"
         outgoing_smtp_capability = "enabled"
@@ -241,20 +243,20 @@ module "instance" {
 
 ## Variable Mapping Reference
 
-| v2.x Variable | v3.x Location |
-|---------------|---------------|
-| `subnet_id` | `network_interfaces[].subnet_id` |
-| `enable_ipv4` | `network_interfaces[].ipv4` |
-| `private_ip_address` | `network_interfaces[].ip_address` |
-| `enable_ipv6` | `network_interfaces[].ipv6` |
-| `private_ipv6_address` | `network_interfaces[].ipv6_address` |
-| `enable_nat` | `network_interfaces[].nat` |
-| `public_ip_address` | `network_interfaces[].nat_ip_address` |
-| `security_group_ids` | `network_interfaces[].security_group_ids` |
-| `dns_records` | `network_interfaces[].dns_record` |
-| `ipv6_dns_records` | `network_interfaces[].ipv6_dns_record` |
-| `nat_dns_records` | `network_interfaces[].nat_dns_record` |
-| `create_pip` | Automatic (creates if `nat = true` and no `nat_ip_address`) |
+| v2.x Variable            | v3.x Location                                                  |
+| ------------------------ | -------------------------------------------------------------- |
+| `subnet_id`            | `network_interfaces[].subnet_id`                             |
+| `enable_ipv4`          | `network_interfaces[].public_ipv4`                           |
+| `private_ip_address`   | `network_interfaces[].ip_address`                            |
+| `enable_ipv6`          | `network_interfaces[].ipv6`                                  |
+| `private_ipv6_address` | `network_interfaces[].ipv6_address`                          |
+| `enable_nat`           | `network_interfaces[].nat`                                   |
+| `public_ip_address`    | `network_interfaces[].nat_ip_address`                        |
+| `security_group_ids`   | `network_interfaces[].security_group_ids`                    |
+| `dns_records`          | `network_interfaces[].dns_record`                            |
+| `ipv6_dns_records`     | `network_interfaces[].ipv6_dns_record`                       |
+| `nat_dns_records`      | `network_interfaces[].nat_dns_record`                        |
+| `create_pip`           | Automatic (creates if`nat = true` and no `nat_ip_address`) |
 
 ## New Features in v3.x
 

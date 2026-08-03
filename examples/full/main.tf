@@ -34,9 +34,9 @@ module "yandex_compute_instance" {
   zone = "ru-central1-a"
   network_interfaces = [
     {
-      subnet_id = module.network.private_subnets_ids[0]
-      ipv4      = true
-      nat       = true
+      subnet_id   = module.network.private_subnets_ids[0]
+      public_ipv4 = true
+      nat         = true
       # DNS записи (в v2.x — внутри network_interfaces)
       dns_record = [
         {
