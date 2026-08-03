@@ -1,3 +1,7 @@
+## v3.0.0 - 2026-08-03
+### Miscellaneous
+- 93315ce [BUMP-MAJOR][RELEASE] make 3.0 version
+
 ## v2.24.0 - 2026-08-03
 ### Features
 - 62a13c0 feat: add dynamic network_interface
