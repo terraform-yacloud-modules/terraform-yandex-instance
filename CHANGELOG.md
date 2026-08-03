@@ -1,3 +1,7 @@
+## v3.1.0 - 2026-08-03
+### Bug Fixes
+- 0b5f519 fix: upgrade guide
+
 ## v3.0.0 - 2026-08-03
 ### Miscellaneous
 - 93315ce [BUMP-MAJOR][RELEASE] make 3.0 version
