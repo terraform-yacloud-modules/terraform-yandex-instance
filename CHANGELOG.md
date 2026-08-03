@@ -1,3 +1,13 @@
+## v3.2.0 - 2026-08-03
+### Features
+- 92b6df7 feat: resolve broken network_interfaces
+
+### Bug Fixes
+- bd1bc69 fix: some fixes to docs + raname ipv4 to understandable public_ipv4 to prevent confusion
+
+### Miscellaneous
+- aa1780b Merge pull request [#120](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/120) from dbryuhanov542/fix/undeclared-outputs
+
 ## v3.1.0 - 2026-08-03
 ### Bug Fixes
 - 0b5f519 fix: upgrade guide
