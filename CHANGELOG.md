@@ -1,3 +1,7 @@
+## v3.3.0 - 2026-09-01
+### Miscellaneous
+- 7c9f848 build(deps): bump actions/cache from 5.0.3 to 5.0.5 ([#116](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/116))
+
 ## v3.2.0 - 2026-08-03
 ### Features
 - 92b6df7 feat: resolve broken network_interfaces
