@@ -1,3 +1,7 @@
+## v3.6.0 - 2026-11-01
+### Miscellaneous
+- 31ace0c build(deps): bump actions/checkout from 6 to 7 ([#123](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/123))
+
 ## v3.5.0 - 2026-11-01
 ### Miscellaneous
 - c149b5c build(deps): bump actions/cache from 5.0.5 to 6.1.0 ([#122](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/122))
