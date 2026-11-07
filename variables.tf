@@ -416,7 +416,7 @@ variable "gpu_cluster_id" {
 # Metadata options
 #
 variable "metadata_options" {
-  description = "Options to configure access to instance's metadata (0 = DISABLED, 1 = ENABLED for endpoints; 0 = OPTIONAL, 1 = REQUIRED for tokens)"
+  description = "Options to configure access to instance's metadata (0 = UNSPECIFIED, 1 = ENABLED, 2 = DISABLED). Note: Yandex Cloud keeps aws_v1_http_token disabled regardless of the requested value"
   type = object({
     gce_http_endpoint    = optional(number)
     aws_v1_http_endpoint = optional(number)
