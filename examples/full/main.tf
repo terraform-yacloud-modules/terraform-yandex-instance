@@ -138,7 +138,9 @@ EOF
     gce_http_endpoint    = 1
     aws_v1_http_endpoint = 1
     gce_http_token       = 1
-    aws_v1_http_token    = 1
+    # aws_v1_http_token: Yandex Cloud принудительно держит эту опцию в disabled,
+    # поэтому запрошенное значение 1 даёт вечный diff в terraform plan.
+    aws_v1_http_token = 2
   }
 
   # Дополнительные параметры boot диска
