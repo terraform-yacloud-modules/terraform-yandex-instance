@@ -1,3 +1,7 @@
+## v3.7.0 - 2026-11-14
+### Bug Fixes
+- 1d58f6d fix(examples): make metadata_options idempotent in full example ([#124](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/124))
+
 ## v3.6.0 - 2026-11-01
 ### Miscellaneous
 - 31ace0c build(deps): bump actions/checkout from 6 to 7 ([#123](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/123))
