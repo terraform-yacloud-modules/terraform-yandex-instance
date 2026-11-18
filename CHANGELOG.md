@@ -1,3 +1,7 @@
+## v3.8.0 - 2026-11-18
+### Miscellaneous
+- b431469 ci: run semver job only on push to main ([#125](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/125))
+
 ## v3.7.0 - 2026-11-14
 ### Bug Fixes
 - 1d58f6d fix(examples): make metadata_options idempotent in full example ([#124](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/124))
