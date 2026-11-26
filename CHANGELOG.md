@@ -1,3 +1,8 @@
+## v3.9.0 - 2026-11-26
+### Miscellaneous
+- 4781c66 Merge pull request [#126](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/126) from MrRuban/feature/platform_id
+- 9b06ec4 update condition for platform_id variable
+
 ## v3.8.0 - 2026-11-18
 ### Miscellaneous
 - b431469 ci: run semver job only on push to main ([#125](https://github.com/terraform-yacloud-modules/terraform-yandex-instance/pull/125))
