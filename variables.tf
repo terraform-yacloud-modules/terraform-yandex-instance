@@ -126,8 +126,17 @@ variable "platform_id" {
   default     = "standard-v3"
 
   validation {
-    condition     = contains(["standard-v1", "standard-v2", "standard-v3", "gpu-standard-v1", "highfreq-v3"], var.platform_id)
-    error_message = "Platform ID must be one of: standard-v1, standard-v2, standard-v3, gpu-standard-v1, highfreq-v3."
+    # https://yandex.cloud/docs/compute/concepts/vm-platforms
+    condition = contains([
+      # standard
+      "standard-v1", "standard-v2", "standard-v3", "standard-v4a", "amd-v1",
+      # compute-optimized
+      "highfreq-v3", "highfreq-v4a",
+      # GPU
+      "gpu-standard-v1", "gpu-standard-v2", "gpu-standard-v3", "gpu-standard-v3i", "gpu-standard-v4",
+      "standard-v3-t4", "standard-v3-t4i",
+    ], var.platform_id)
+    error_message = "Platform ID must be one of: standard-v1, standard-v2, standard-v3, standard-v4a, amd-v1, highfreq-v3, highfreq-v4a, gpu-standard-v1, gpu-standard-v2, gpu-standard-v3, gpu-standard-v3i, gpu-standard-v4, standard-v3-t4, standard-v3-t4i."
   }
 }
 
